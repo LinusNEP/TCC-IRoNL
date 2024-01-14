@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="llm_node" pkg="tcc-ironl" type="llmNode_launcher.sh" output="screen"/>
+</launch>
+
