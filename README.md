@@ -6,7 +6,7 @@
   </p>
   
 <p align="center">
-  <h3 align="center"><a href="https://....">Paper</a> | <a href="https://....">ArXiv</a> | <a href="https://osf.io/cmbw6/">Resources & Videos</a> </h3>
+  <h3 align="center"> | <a href="https://....">Paper</a> | <a href="https://....">ArXiv</a> | <a href="https://osf.io/cmbw6/">Resources & Videos</a> | </h3>
   <div align="center"></div>
 </p>
 
