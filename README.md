@@ -12,7 +12,7 @@
 
 |                                                                                                   |                                                                                                      |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-|<img src="https://github.com/LinusNEP/TCC-IRoNL/blob/main/Figures/gifAnimation1.gif" width="100%"> | <img src="https://github.com/LinusNEP/TCC-IRoNL/blob/main/Figures/real_world_gif.gif" width="4000px">|
+|<img src="https://github.com/LinusNEP/TCC-IRoNL/blob/main/Figures/gifAnimation1.gif" width="100%"> | <img src="https://github.com/LinusNEP/TCC-IRoNL/blob/main/Figures/metrics.png" width="4000px">|
 
 ## Contents
 
