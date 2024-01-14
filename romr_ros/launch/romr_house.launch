@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<launch>
+	<param command="$(find xacro)/xacro $(find romr_ros)/urdf/romr_robot.urdf" name="robot_description"/>
+
+	<!-- For cps world  -->
+	<arg name="x" default="0.0" />
+	<arg name="y" default="0.0" />
+  	<arg name="z" default="0.0" /> 
+
+	<node args="-param robot_description -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model romr_ros" name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"/>
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+	<param name="publish_frequency" type="double" value="50.0" />
+	
+  	</node>
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="paused" value="false"/>
+		<arg name="use_sim_time" value="true"/>  <!-- set to false if on real-world -->
+		<arg name="gui" value="true"/>
+		<arg name="headless" value="false"/>
+		<arg name="debug" value="false"/>
+	        <arg name="world_name" value="$(find romr_ros)/worlds/cps_world.world"/>   
+	</include>
+
+</launch>
+
+
