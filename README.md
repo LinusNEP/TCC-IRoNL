@@ -83,7 +83,7 @@ roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=fa
 roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
 rosrun unitree_guide main_ctrl
 ```
-After running T1 -T3 above, the robot will lie on the floor of the Gazebo world. At the terminal where you ran `rosrun unitree_guide main_ctrl`, press the key '2' on the keyboard to switch the robot's state from Passive(initial state) to FixedStand. Thereafter, press the '5' key to switch from FixedStand to MoveBase. At this point, the robot is ready to receive navigation commands.
+After running T1 -T3 above, the robot will lie on the floor of the Gazebo world. At the terminal where you ran `rosrun unitree_guide main_ctrl`, press the key '2' on the keyboard to switch the robot's state from Passive(initial state) to FixedStand. After, you can press the '5' key to switch from FixedStand to MoveBase. At this point, the robot is ready to receive navigation commands.
 
 **T1 - T3 (if wheeled robot):**
 ```bash
@@ -102,13 +102,13 @@ rosrun tcc-ironl chatGUI.py
 Interact with the simulated robot through natural language with the chatGUI interface that will pop up after executing `rosrun tcc-ironl chatGUI.py` above. You can send the robot to a goal location e.g., go to the Secretary's office, move in a circular pattern, where are you now, etc.
 
 ### Real-World Robot
-Launch your robot and ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such "move forward, backward, right, what can you see around you?, where are you now?, etc." may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` co-ordinates of the task environment. You can obtain such co-ordinates information from LiDAR or pointcloud data.
+Launch your robot and ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc." may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can obtain such coordinates information from LiDAR or point-cloud data.
 - Configurations: 
   | Topics                         | Publisher           | Subscribers                 | Description                                   | Msg Type                     |
   |--------------------------------|---------------------|-----------------------------|-----------------------------------------------|------------------------------|
   | `/odom`                        | REM                 | MoveBase, LLMNode           | Robot's odometry data                         | [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)|
   | `/cmd_vel`                     | MoveBase, LLMNode   | REM                         | Robot's command velocity data                 | [geometry_msgs/Twist](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)|
-  | `/clip_node/recognized_objects`| CLIPNode            | LLMNode                     | CLIPNode objects decriptions                  | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
+  | `/clip_node/recognized_objects`| CLIPNode            | LLMNode                     | CLIPNode objects descriptions                  | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
   | `/llm_input`                   | ChatGUI             | LLMNode                     | User's input commands, queries and tasks      | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
   | `/llm_output`                  | LLMNode             | ChatGUI                     | LLMNode's interpretation of the input command | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
   | `/depth/image`, `/rgb/image`*  | Observation Source  | CLIPNode, LLMNode, YOLO V8* | Image stream from RGB-D camera                | [sensor_msgs/Image](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html)|
