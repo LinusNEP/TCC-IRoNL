@@ -123,6 +123,7 @@ Launch your robot and ensure that the ROS topics and parametric configurations i
 
 ## License
 ![Creative Commons licenses 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
+
 [This work is licensed under a Creative Commons Attribution International 4.0 License.](https://creativecommons.org/licenses/by/4.0/)
 
 ## Acknowledgement
