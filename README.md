@@ -20,6 +20,7 @@
 - [Citation](https://github.com/LinusNEP/TCC-IRoNL#Citation)
 - [TCC-IRoNL installation](https://github.com/LinusNEP/TCC-IRoNL#TCC-IRoNL-installation)
 - [Run TCC-IRoNL Example Demos](https://github.com/LinusNEP/TCC-IRoNL#Run-TCC-IRoNL-Example-Demos)
+- [License](https://github.com/LinusNEP/TCC-IRoNL#License)
 - [Acknowledgement](https://github.com/LinusNEP/TCC-IRoNL#Acknowledgement)
 
 ## TCC-IRoNL
@@ -119,6 +120,10 @@ Launch your robot and ensure that the ROS topics and parametric configurations i
     - Intel Realsense D435i Camera - `sensor_msgs/Image`, `sensor_msgs/PointCloud2`
 - Robot's base frame: `base_link`
 - Map frame: `map`
+
+## License
+![Creative Commons licenses 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
+[This work is licensed under a Creative Commons Attribution International 4.0 License.](https://creativecommons.org/licenses/by/4.0/)
 
 ## Acknowledgement
 Thanks to the following repository:
