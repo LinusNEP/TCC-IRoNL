@@ -40,7 +40,7 @@ url = {https://doi.org/10.1145/3610978.3640723},
 doi = {10.1145/3610978.3640723},
 booktitle = {Companion of the 2024 ACM/IEEE International Conference on Human-Robot Interaction},
 numpages = {5},
-keywords = {workshop, visual impairment, social robots, sight loss, haptics},
+keywords = {Human-robot interaction, LLMs, VLMs, ChatGPT, ROS, autonomous robots, natural language interaction},
 location = {Boulder, CO, USA},
 series = {HRI '24}
 }
