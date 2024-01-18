@@ -29,16 +29,20 @@ TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trai
 ## Citation
 If you use this work in your research, please cite it using the following BibTeX entry:
 ```bibtex
-@article{linus2024,
-  title={The Conversation is the Command: Interacting with Real-World Autonomous Robot through Natural Language},
-  author={Linus, Nwankwo and Elmar, Rueckert},
-  journal={ACM/IEEE International Conference on Human-Robot Interaction (HRI ’24 Companion)},
-  volume={xxxx},
-  number={vvvvv},
-  pages={ssss},
-  year={2024},
-  publisher={ddddddd},
-  DOI={https://doi.org/10.1145/3610978.3640723}
+@inproceedings{10.1145/3610978.3640723,
+author = {Linus, Nwankwo and Elmar, Rueckert},
+title = {The Conversation is the Command: Interacting with Real-World Autonomous Robot Through Natural Language},
+year = {2024},
+isbn = {979-8-4007-0323-2/24/03},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3610978.3640723},
+doi = {10.1145/3610978.3640723},
+booktitle = {Companion of the 2024 ACM/IEEE International Conference on Human-Robot Interaction},
+numpages = {5},
+keywords = {workshop, visual impairment, social robots, sight loss, haptics},
+location = {Boulder, CO, USA},
+series = {HRI '24}
 }
 ```
 
