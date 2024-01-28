@@ -24,7 +24,7 @@
 - [Acknowledgement](https://github.com/LinusNEP/TCC-IRoNL#Acknowledgement)
 
 ## TCC-IRoNL
-TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable autonomous robots to interact naturally with humans or other entities through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://doi.org/10.1145/3610978.3640723) for more details.
+TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable autonomous robots to interact naturally with humans or other entities through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://arxiv.org/abs/2401.11838) for more details.
 
 ## Citation
 If you use this work in your research, please cite it using the following BibTeX entry:
