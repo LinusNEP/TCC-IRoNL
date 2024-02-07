@@ -1,6 +1,6 @@
 <p align="center">
 
-  <h2 align="center">The Conversation is the Command: Interacting with Autonomous Robot through Natural Language (TCC-IRoNL)</h2>
+  <h2 align="center">The Conversation is the Command: Interacting with Real-World Autonomous Robot through Natural Language (TCC-IRoNL)</h2>
   <p align="center">
       Team/Contributors:  <a href="https://cps.unileoben.ac.at/m-sc-linus-nwankwo/">Nwankwo Linus</a> | <a href="https://cps.unileoben.ac.at/prof-elmar-rueckert/">Elmar Rueckert</a>
   </p>
