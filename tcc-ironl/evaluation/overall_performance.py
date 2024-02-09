@@ -15,8 +15,6 @@ oia_log_path = 'oia_log.csv'
 llm_data_log = pd.read_csv(llm_data_log_path)
 nsr_log = pd.read_csv(nsr_log_path)
 oia_log = pd.read_csv(oia_log_path)
-
-# First few rows of each dataframe to understand their structure
 llm_data_log_head = llm_data_log.head()
 nsr_log_head = nsr_log.head()
 oia_log_head = oia_log.head()
@@ -39,23 +37,19 @@ synonym_groups = {
     'elevator_group': ['lift', 'elevator', 'toilet', 'passage']
 }
 
-# Map labels to their respective groups
 def map_label_to_group(label):
     for group_name, synonyms in synonym_groups.items():
         if label.lower() in synonyms:
             return group_name
-    return 'other_group'  # For labels that do not fit into any predefined group
+    return 'other_group'  
 
-# Map both 'Predicted Label' and 'True Label' to their respective groups
 llm_data_log['Predicted Label Group'] = llm_data_log['Predicted Label'].apply(map_label_to_group)
 llm_data_log['True Label Group'] = llm_data_log['True Label'].apply(map_label_to_group)
 
-# Calculate CRA, NSR, and OIA from the logged data
 llm_accuracy = (llm_data_log['Predicted Label Group'] == llm_data_log['True Label Group']).mean()
 nsr_success_rate = nsr_log['Success'].mean()
 oia_precision = oia_log['Correct Identification'].mean()
 
-# Prepare data for plotting
 data_for_plot = {
     'CRA': [llm_accuracy],
     'NSR': [nsr_success_rate],
@@ -64,15 +58,12 @@ data_for_plot = {
 
 performance_df = pd.DataFrame(data_for_plot)
 
-# Ensuring 'Success' and 'Correct Identification' are treated as numerical data for standard deviation calculation
 nsr_log['Success'] = nsr_log['Success'].astype(float)
 oia_log['Correct Identification'] = oia_log['Correct Identification'].astype(float)
 
-# Standard deviation for NSR Log and OIA Log
 nsr_std = nsr_log['Success'].std()
 oia_std = oia_log['Correct Identification'].std()
 
-# For CRA data log, compute the variance in the frequency of predicted labels as a proxy for standard deviation
 llm_label_variance = llm_data_log['Predicted Label'].value_counts(normalize=True).var()
 """
 # For NSR Log, calculate the variance in the frequency of successes
@@ -82,7 +73,7 @@ nsr_std = nsr_success_frequency.var()
 oia_correct_freq = oia_log['Correct Identification'].value_counts(normalize=True)
 oia_std = oia_correct_freq.var()
 """
-# Update standard deviation data
+
 std_for_plot = {
     'CRA': [llm_label_variance],
     'NSR': [nsr_std],
@@ -90,12 +81,10 @@ std_for_plot = {
 }
 std_df = pd.DataFrame(std_for_plot, index=[0])
 
-# Confusion matrix
 true_labels = llm_data_log['True Label']
 predicted_labels = llm_data_log['Predicted Label']
 cm = confusion_matrix(true_labels, predicted_labels, labels=true_labels.unique())
 
-# Consolidate labels based on the specified rules
 def consolidate_labels(label):
     label = label.lower()
     if "professor" in label or "elmar" in label:
@@ -125,25 +114,21 @@ def consolidate_labels(label):
     else:
         return label
 
-# Apply the consolidated function to both true and predicted labels
 llm_data_log['Consolidated True Label'] = llm_data_log['True Label'].apply(consolidate_labels)
 llm_data_log['Consolidated Predicted Label'] = llm_data_log['Predicted Label'].apply(consolidate_labels)
 
-# Confusion matrix with consolidated labels
 consolidated_true_labels = llm_data_log['Consolidated True Label']
 consolidated_predicted_labels = llm_data_log['Consolidated Predicted Label']
 cm_consolidated = confusion_matrix(consolidated_true_labels, consolidated_predicted_labels, labels=consolidated_true_labels.unique())
 
 # Overall accuracy
 overall_accuracy = accuracy_score(consolidated_true_labels, consolidated_predicted_labels)
-# Accuracy for each label
 unique_labels = consolidated_true_labels.unique()
 label_accuracies = {}
 for label in unique_labels:
     label_data = llm_data_log[llm_data_log['Consolidated True Label'] == label]
     label_accuracy = accuracy_score(label_data['Consolidated True Label'], label_data['Consolidated Predicted Label'])
     label_accuracies[label] = label_accuracy
-# Calculate mean accuracy across labels
 mean_accuracy = sum(label_accuracies.values()) / len(label_accuracies)
 overall_accuracy, label_accuracies, mean_accuracy
 print(mean_accuracy)
@@ -151,27 +136,21 @@ print(mean_accuracy)
 # Questionnaire data
 file_path = 'questionnaire_responses.csv'
 questionnaire_data = pd.read_csv(file_path)
-# First few rows to understand the structure and content of the data
 questionnaire_data.head()
 
-# Normalize the gender data
 questionnaire_data['Gender'] = questionnaire_data['Gender'].str.lower().map({'male': 'Male', 'm': 'Male', 'männlich': 'Male', 'female': 'Female', 'f': 'Female', 'weiblich': 'Female'}).fillna('Other')
-# Normalize the occupation data
 occupation_normalization = {'student': 'Students', 'Student': 'Students', 'Bachelor Student': 'Students', 'University Assistant': 'Students', 'Master degree student': 'Students', 'researcher': 'Researcher' , 'Researcher': 'Researcher'}
 questionnaire_data['Occupation'] = questionnaire_data['Occupation'].replace(occupation_normalization)
 
-# Set aesthetics for the plots
 #sns.set(style="whitegrid")
 #plt.rcParams.update({'font.size': 20})
 
-# Count of respondents for each standardized gender
 respondent_count = questionnaire_data.groupby('Occupation').size()
 
-# Convert relevant columns to numeric
 questionnaire_data['Familiarity with Technology (1 - Not familiar, 5 - Very familiar)'] = pd.to_numeric(questionnaire_data['Familiarity with Technology (1 - Not familiar, 5 - Very familiar)'], errors='coerce')
 questionnaire_data['How would you rate the ease of communicating with the robot? (1 - Very difficult, 5 - Very easy)'] = pd.to_numeric(questionnaire_data['How would you rate the ease of communicating with the robot? (1 - Very difficult, 5 - Very easy)'], errors='coerce')
 questionnaire_data['How intuitive did you find the process of giving commands to the robot? (1 - Not intuitive, 5 - Highly intuitive)'] = pd.to_numeric(questionnaire_data['How intuitive did you find the process of giving commands to the robot? (1 - Not intuitive, 5 - Highly intuitive)'], errors='coerce')
-# Mapping the responses to numerical values
+
 response_mapping = {
     'Never': 1,
     'Rarely': 2,
@@ -183,7 +162,6 @@ questionnaire_data['Did you feel that the robot understood your commands accurat
 
 questionnaire_data['How satisfied are you with the responsiveness of the robot to your commands? (1 - Very dissatisfied, 5 - Very satisfied)'] = pd.to_numeric(questionnaire_data['How satisfied are you with the responsiveness of the robot to your commands? (1 - Very dissatisfied, 5 - Very satisfied)'], errors='coerce')
 
-# Recalculate the grouped data
 grouped_data = questionnaire_data.groupby('Occupation').agg({
     'Familiarity with Technology (1 - Not familiar, 5 - Very familiar)': 'mean',
     'How would you rate the ease of communicating with the robot? (1 - Very difficult, 5 - Very easy)': 'mean',
@@ -192,56 +170,42 @@ grouped_data = questionnaire_data.groupby('Occupation').agg({
     'How satisfied are you with the responsiveness of the robot to your commands? (1 - Very dissatisfied, 5 - Very satisfied)': 'mean'
 }).reset_index()
 
-# Create 2 x 2 subplot structure
 fig = plt.figure(figsize=(15, 10))
-# Setting up a GridSpec with 2 rows and 2 columns
 gs = gridspec.GridSpec(2, 2, height_ratios=[1, 1], width_ratios=[0.45, 1], figure=fig)
 gs1 = gridspec.GridSpec(2, 2, height_ratios=[1, 1], width_ratios=[0.70, 0.25], figure=fig)
-
-# Assign subplots to the grid
 ax0 = plt.subplot(gs[0, 0])  
 ax1 = plt.subplot(gs[0, 1])  
 ax2 = plt.subplot(gs1[1, 0])
 ax3 = plt.subplot(gs1[1, 1])  
 
-# Performance Metrics Bar Chart
 metric_names = list(data_for_plot.keys())
 bar_width = 0.001
 num_metrics = len(metric_names)
 bar_positions = [i * (bar_width + 0.0001) for i in range(num_metrics)]
 colors = ['#fed2a1', '#4c8986', '#F38080','#BDD7E0', '#C1B896', '#BDE0C6', '#E0BDD2', '#A4A4B3']
 
-# Loop to create bars with reduced width and error bars
 for i, metric in enumerate(metric_names):
     ax0.bar(bar_positions[i], performance_df.loc[0, metric], width=bar_width, color=colors[i % len(colors)],
             yerr=std_df.loc[0, metric], capsize=4)
             
-# Set labels and font properties
 ax0.set_ylabel('Performance (%)', fontsize=20, fontweight='bold')
 ax0.set_xticks(bar_positions)
 ax0.set_xticklabels(metric_names, rotation=45, fontsize=16, fontweight='bold')
-ax0.tick_params(axis='y', labelsize=16, labelcolor='black')  # Set labelsize to desired value
+ax0.tick_params(axis='y', labelsize=16, labelcolor='black')
 ax0.grid(axis='y', linestyle='--', alpha=0.7)
 ax0.set_xlabel('Metrics', fontsize=20, fontweight='bold')
 
-# Add percentage labels on top of each bar
 for i, rect in enumerate(ax0.patches):
     height = rect.get_height()
     ax0.annotate(f'{height * 100:.2f}%', (rect.get_x() + rect.get_width() / 2., height),
                         ha='center', va='center', xytext=(0, 10), textcoords='offset points', fontsize=18, fontweight='bold')
-#plt.tight_layout()  
 
-# Normalize the confusion matrix
 cm_normalized = cm_consolidated.astype('float') / cm_consolidated.sum(axis=1)[:, np.newaxis]
-
-# Confusion Matrix Plot
 ax_cm = ax1
-# Plot the normalized values as a heatmap
 sns.heatmap(cm_normalized, annot=True, fmt=".1f", cmap='Reds', ax=ax_cm,
             xticklabels=unique_labels, yticklabels=unique_labels, cbar=True, annot_kws={"size": 16})#, "weight": 'bold'})
 plt.setp(ax_cm.get_xticklabels(), rotation=45, fontsize=16, fontweight='bold')
 plt.setp(ax_cm.get_yticklabels(), rotation=0, fontsize=16, fontweight='bold')
-#ax_cm.set_title('Normalized confusion matrix', pad=20)
 ax1.set_xlabel('Predicted labels', fontsize=20, fontweight='bold')
 ax1.set_ylabel('True labels', fontsize=20, fontweight='bold')
 cbar = ax_cm.collections[0].colorbar
@@ -251,7 +215,6 @@ for label in cbar.ax.get_yticklabels():
     label.set_fontsize(16) 
 plt.tight_layout()  
 
-# Stacked Bar Chart for Ratings
 grouped_data['Total'] = grouped_data.sum(axis=1)
 grouped_data_sorted = grouped_data.sort_values(by='Total', ascending=False)
 index = np.arange(grouped_data_sorted.shape[0])
@@ -279,32 +242,19 @@ for idx, bars in enumerate(zip(tech_bar, comm_bar, understand_bar, intuitive_bar
     ax2.text(satisfaction.get_x() + satisfaction.get_width() / 2, total_height_satisfaction - satisfaction.get_height() / 2, f'{grouped_data_sorted.iloc[idx, 5]:.2f}', ha='center', va='center', color='black', fontsize=20)
 ax2.set_xlabel('Respondents occupation distribution', fontsize=20, fontweight='bold')
 ax2.set_ylabel('Ratings', fontsize=20, fontweight='bold')
-#ax2.set_title('Stacked Average Ratings by Occupation distribution')
 plt.subplots_adjust(bottom=0.14)
 ax2.tick_params(axis='y', labelsize=16, labelcolor='black')
 ax2.set_xticks(index)
 ax2.set_xticklabels(grouped_data_sorted['Occupation'], rotation=30, fontsize=16, fontweight='bold')
 ax2.legend()
 
-# Create the legend in ax3
 handles, labels = ax2.get_legend_handles_labels()
 legend = ax3.legend(handles, labels, loc='best', ncol=1, prop={'size': 18, 'weight': 'bold'})
 ax3.axis('off')
 
-# Remove the legend from ax2
 ax2.get_legend().remove()
 #plt.tight_layout()
 plt.show()
-
-"""
-# Gender Distribution with category names and percentages
-gender_counts = questionnaire_data['Gender'].value_counts()
-gender_labels = [f'{label}: {count}' for label, count in zip(gender_counts.index, gender_counts)]
-textprops = {'fontsize': 16, 'weight': 'bold'}
-gender_counts.plot(kind='pie', labels=gender_labels, autopct='%.1f%%', startangle=-90, colors=['lightblue', 'lightgreen', 'lightcoral', 'lightpink', 'lightyellow'], ax=ax3, textprops=textprops)
-ax3.set_ylabel('')  # Adjust title, labels for axes[1, 1] as needed
-#plt.tight_layout()
-"""
 
 # Percentage of participants who rated the ease of communication as 4 or 5 (favorable)
 ease_communication_column = 'How would you rate the ease of communicating with the robot? (1 - Very difficult, 5 - Very easy)'
@@ -312,7 +262,6 @@ favorable_responses = questionnaire_data[ease_communication_column].apply(lambda
 total_responses = questionnaire_data[ease_communication_column].count()
 
 percentage_favorable = (favorable_responses / total_responses) * 100
-
 print(percentage_favorable)
 
 # Percentage of participants who rated the intuitiveness of the approach as 4 or 5 (favorable)
@@ -321,7 +270,6 @@ intuitiveness_favorable_responses = questionnaire_data[intuitiveness_column].app
 intuitiveness_total_responses = questionnaire_data[intuitiveness_column].count()
 
 percentage_intuitiveness_favorable = (intuitiveness_favorable_responses / intuitiveness_total_responses) * 100
-
 print(percentage_intuitiveness_favorable)
 
 # Percentage of participants who are satisfied with the robot's response to the commands as 4 or 5 (favorable)
@@ -330,7 +278,6 @@ satisfaction_favorable_responses = questionnaire_data[satisfaction_column].apply
 satisfaction_total_responses = questionnaire_data[satisfaction_column].count()
 
 percentage_satisfaction_favorable = (satisfaction_favorable_responses / satisfaction_total_responses) * 100
-
 print(percentage_satisfaction_favorable)
 
 
