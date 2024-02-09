@@ -2,7 +2,6 @@
 
 TCC_Path=$(rospack find tcc-ironl)
 
-# Path to the scripts
 gpt2_llm_node="python3 $TCC_Path/llm_nodes/scripts/gpt2_llm.py"
 bert_llm_node="python3 $TCC_Path/llm_nodes/bert_llm.py"
 distilBERT_llm_node="python3 $TCC_Path/llm_nodes/distilBERT_llm.py"
@@ -11,7 +10,6 @@ llama_llm_node="python3 $TCC_Path/llm_nodes/llama_llm.py"
 RoBERTa_llm_node="python3 $TCC_Path/llm_nodes/RoBERTa_llm.py"
 gpt3_llm_node="python3 $TCC_Path/llm_nodes/gpt3_llm.py"
 
-# Select from the menu
 show_menu() {
     echo "Select the LLM to run:"
     echo "0) Exit"
@@ -24,7 +22,6 @@ show_menu() {
     echo "7) OpenAI GPT-3"
 }
 
-# User choice
 run_selected_script() {
     local choice
     read -p "Enter choice [0-7]: " choice
@@ -41,7 +38,6 @@ run_selected_script() {
     esac
 }
 
-# Main loop
 while true
 do
     show_menu
