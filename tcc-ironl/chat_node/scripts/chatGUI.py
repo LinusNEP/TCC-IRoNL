@@ -29,10 +29,8 @@ class ChatInterface(tk.Tk):
         self.send_button = tk.Button(self, text="Send", command=self.send_message, bd=0, bg="lightpink", activebackground="lightblue")
         self.send_button.pack()
 
-        # Enter key binding to the send_message
         self.user_input_entry.bind("<Return>", self.send_message)
 
-        # Image icons
         self.you_icon = tk.PhotoImage(file="you_icon.png")
         self.llm_icon = tk.PhotoImage(file="llm_icon.png")
 
@@ -58,12 +56,10 @@ class ChatInterface(tk.Tk):
 
         self.chat_history.config(state=tk.NORMAL)
 
-        # Insert icon before the message
         if icon:
             self.chat_history.image_create(tk.END, image=icon)
             self.chat_history.insert(tk.END, " ")
 
-        # Message padding and background color
         self.chat_history.insert(tk.END, formatted_message, message_tag)
         self.chat_history.tag_config(message_tag, lmargin1=20, lmargin2=20, rmargin=20, background=color, foreground="black", font=("Arial", 10, "bold"))
 
