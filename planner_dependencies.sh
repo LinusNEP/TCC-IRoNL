@@ -18,11 +18,9 @@ sudo apt-get install ros-noetic-rviz
 
 echo "ROS Navigation Planner dependencies installed successfully."
 
-# Update environment variables
 source /opt/ros/noetic/setup.bash
 
 # source ~/catkin_ws/devel/setup.bash
 
-# Exit
 exit 0
 
