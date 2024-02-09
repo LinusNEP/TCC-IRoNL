@@ -6,7 +6,6 @@ TCC_Path=$(rospack find tcc-ironl)
 clip_node="python3 $TCC_Path/vlm_nodes/clip_node.py"
 glip_node="python3 $TCC_Path/vlm_nodes/glip_node.py"
 
-# Select from the menu
 show_menu() {
     echo "Select the VLM to run:"
     echo "0) Exit"
@@ -14,7 +13,6 @@ show_menu() {
     echo "2) GLIP"
 }
 
-# User choice
 run_selected_script() {
     local choice
     read -p "Enter choice [0-2]: " choice
@@ -26,7 +24,6 @@ run_selected_script() {
     esac
 }
 
-# Main loop
 while true
 do
     show_menu
