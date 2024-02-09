@@ -24,7 +24,7 @@
 - [Acknowledgement](https://github.com/LinusNEP/TCC-IRoNL#Acknowledgement)
 
 ## TCC-IRoNL
-TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable autonomous robots to interact naturally with humans or other entities through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://arxiv.org/abs/2401.11838) for more details.
+TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://arxiv.org/abs/2401.11838) for more details.
 
 ## Citation
 If you use this work in your research, please cite it using the following BibTeX entry:
@@ -124,6 +124,9 @@ Launch your robot and ensure that the ROS topics and parametric configurations i
     - Intel Realsense D435i Camera - `sensor_msgs/Image`, `sensor_msgs/PointCloud2`
 - Robot's base frame: `base_link`
 - Map frame: `map`
+
+### Run TCC-IRoNL on your Own Robot
+Configure your robot using the ROS topic configurations described in the table above. Then, follow the instructions to launch **T4 - T6** as shown above and begin interacting with the robot. Keep in mind that sending navigation tasks like "navigate to xxx's office" will require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can extract such coordinate information from LiDAR or point-cloud data. For custom commands such as move forward, turn right etc, and queries, no additional configurations are needed."
 
 ## License
 ![Creative Commons licenses 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
