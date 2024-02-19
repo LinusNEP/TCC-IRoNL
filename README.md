@@ -134,7 +134,9 @@ Configure your robot using the ROS topic configurations described in the table a
 [This work is licensed under a Creative Commons Attribution International 4.0 License.](https://creativecommons.org/licenses/by/4.0/)
 
 ## Acknowledgement
-Thanks to the following repository:
+This work is still in progress, therefore, expect some bugs. However, we would appreciate your kind contribution or raising an issue for such bug.
+
+**Thanks to the following repository:**
 - [Unitree_ros](https://github.com/macc-n/ros_unitree.git)
 - [ROMR](https://github.com/LinusNEP/ROMR.git)
 - [Ultralytics_ros](https://github.com/Alpaca-zip/ultralytics_ros.git)
