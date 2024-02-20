@@ -1,9 +1,6 @@
 <p align="center">
-
   <h2 align="center">The Conversation is the Command: Interacting with Real-World Autonomous Robot through Natural Language (TCC-IRoNL)</h2>
-  <p align="center">
-      Team/Contributors:  <a href="https://cps.unileoben.ac.at/m-sc-linus-nwankwo/">Nwankwo Linus</a> | <a href="https://cps.unileoben.ac.at/prof-elmar-rueckert/">Elmar Rueckert</a>
-  </p>
+</p>
   
 <p align="center">
   <h3 align="center"> | <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> | <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> | <a href="https://osf.io/cmbw6/">Data & Videos</a> | <a href="https://doi.org/10.1145/3610978.3640723">DOI</a> | <a href="https://creativecommons.org/licenses/by/4.0/">License</a> | </h3>
