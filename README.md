@@ -78,6 +78,7 @@ source devel/setup.bash
 Open six terminal windows (T1-T6) in your workspace directory and run the following:
 
 **T1 - T3 (if quadruped robot):**
+
 First, make sure to source all the opened terminals `source devel/setup.bash`.
 ```bash
 roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
@@ -94,6 +95,7 @@ roslaunch romr_ros romr_navigation.launch
 For the wheeled robot, you do not need to switch states. After launching `roslaunch romr_ros romr_navigation.launch`, execute T4 - T6, and start interacting with the robot.
 
 **T4 - T6:**
+
 Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T4 - T6. Set permissions to the executable scripts (`bash set_permission.sh`). Upon running `roslaunch tcc-ironl llm_node.launch` and `roslaunch tcc-ironl vlm_node.launch`, a menu will appear, allowing you to select LLM options such as OpenAI GPT-2, Google BERT, Facebook RoBERTa, and VLM options such as CLIP, GLIP for execution. To exit, simply press `ctrl + c` and select 0 to terminate the program.
 ```bash
 roslaunch tcc-ironl llm_node.launch
