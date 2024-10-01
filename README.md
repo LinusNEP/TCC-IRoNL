@@ -137,6 +137,6 @@ This work is still in progress, therefore, expect some bugs. However, we would a
 
 **Thanks to the following repository:**
 - [Unitree_ros](https://github.com/macc-n/ros_unitree.git)
-- [ROMR](https://github.com/LinusNEP/ROMR.git)
+- [ROMR_ros](https://github.com/LinusNEP/ROMR.git)
 - [Ultralytics_ros](https://github.com/Alpaca-zip/ultralytics_ros.git)
 
