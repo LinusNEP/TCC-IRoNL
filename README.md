@@ -1,5 +1,5 @@
 <p align="center">
-  <h2 align="center">The Conversation is the Command: Interacting with Real-World Autonomous Robot through Natural Language (TCC-IRoNL)</h2>
+  <h2 align="center">The Conversation is the Command: Interacting with Real-World Autonomous Robots through Natural Language (TCC-IRoNL)</h2>
 </p>
   
 <p align="center">
