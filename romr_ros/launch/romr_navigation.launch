@@ -35,10 +35,10 @@
     <param name="delta" value="0.1" />
   </node>  -->
   
-<!--*********** Object detection and segmentation model ***********-->
+<!--*********** Object detection and segmentation model ***********
   <include file="$(find ultralytics_ros)/launch/tracker.launch">
     <arg name="debug" value="true"/>
-  </include>
+  </include> -->
 
 </launch>
 

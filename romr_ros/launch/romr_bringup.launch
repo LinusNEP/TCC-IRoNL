@@ -1,0 +1,27 @@
+<?xml version = "1.0"?>
+<launch>
+	<param name ="/use_sim_time" value="true"/>	<!-- set to false if on real-world -->
+
+	<arg name="gui" default="True" />
+	<param name="use_gui" value="$(arg gui)"/>
+	<param name="robot_description" command="cat $(find romr_ros)/urdf/romr_robot.xacro" />
+	
+	<!-- ***** Setting up the transformation configuration (the relationships between the coordinate frames ***** -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> 
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> 
+	
+	<!--
+       <node pkg ="tf" 	type="static_transform_publisher" 	name="odom_to_base_link"  	args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_link 40"/>
+       <node pkg ="tf" 	type="static_transform_publisher" 	name="base_link_to_laser" 	args="0.0 0.0 0.0 0.0 0.0 0.0 /base_link /lidar_link 40"/>   
+	-->
+	
+	<!-- ***** Launch the rosserial python node ***** -->	
+	<node name="serial_node" pkg="rosserial_python" type="serial_node.py">
+		<param name="port" value="/dev/ttyACM0"/>
+		<param name="baud" value="115200"/>
+	</node>
+	
+       <!-- ***** Launch the RPlidar node ***** 
+	<include file="$(find rplidar_ros)/launch/rplidar.launch" /> 	-->
+	
+</launch>

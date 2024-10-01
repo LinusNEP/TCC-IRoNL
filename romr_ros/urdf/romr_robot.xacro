@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="romr_ros" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find romr_ros)/urdf/romr_materials.xacro" />
+<xacro:include filename="$(find romr_ros)/gazebo/romr_gazebo_materials.gazebo" />  
+<xacro:include filename="$(find romr_ros)/gazebo/romr_gazebo_physics.gazebo" />
+<xacro:include filename="$(find romr_ros)/gazebo/romr_gazebo_plugins.gazebo" />
+ 
+  <!--******** Define intertial property macros ********** -->
+  
+  <xacro:macro name="footprint_inertia" params="m w h d">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0" izz="${(m/12) * (w*w + h*h)}"/>
+    </inertial>
+  </xacro:macro>
+  
+  <!-- ****************** Robot bases ***************************  -->
+  <!-- Define the center of the main robot chassis projected on the ground -->   
+  <link name="base_footprint">
+    <xacro:footprint_inertia m="0" w="0" d="0" h="0"/>
+  </link>
+  
+  <!-- The base footprint of the robot is located underneath the chassis -->
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0.0 0.0 -0.14" rpy="0 0 0"/> 
+  </joint>
+  
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0374777931065171 -0.000742607274570373 0.0517646177576365" rpy="0 0 0" />
+      <mass value="5.79174328389446" />
+      <inertia  ixx="0.0142969060262334" ixy="-4.92784367063061E-08" ixz="4.92627122966751E-05" iyy="0.0341323035296294" iyz="-2.71693609467846E-08" izz="0.0398544878636473" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/base_link.STL" />
+      </geometry>
+      <material name="white">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="rightwheel_link">
+    <inertial>
+      <origin xyz="-1.2143E-17 0.033904 1.3878E-17" rpy="0 0 0" />
+      <mass  value="1.0582" />
+      <inertia  ixx="0.0018538" ixy="-1.2518E-19" ixz="-7.2208E-20" iyy="0.0031139" iyz="1.5395E-18" izz="0.0018538" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/rightwheel.STL" />
+      </geometry>
+      <material name="black">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"  rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/rightwheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="rightwheel_joint" type="continuous">
+    <origin xyz="-0.12418 0.185 -0.063" rpy="0 0 3.1416" />
+    <parent link="base_link" />
+    <child link="rightwheel_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  
+  <link name="leftwheel_link">
+    <inertial>
+      <origin xyz="-2.4286E-17 -0.033904 4.1633E-17" rpy="0 0 0" />
+      <mass  value="1.0582" />
+      <inertia ixx="0.0018538" ixy="8.3854E-19" ixz="9.7745E-20" iyy="0.0031139" iyz="1.3019E-19" izz="0.0018538" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/leftwheel.STL" />
+      </geometry>
+      <material name="black">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/leftwheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="leftwheel_joint" type="continuous">
+    <origin xyz="-0.12418 -0.185 -0.063" rpy="0 0 -3.1416" />
+    <parent link="base_link" />
+    <child link="leftwheel_link" />
+    <axis xyz="0 1 0" />
+  </joint>
+  
+  <link name="casterwheel_link">
+    <inertial>
+      <origin xyz="-0.0032546 0.0053327 0.013127" rpy="0 0 0" />
+      <mass value="0.10255" />
+      <inertia ixx="9.4829E-05" ixy="-2.3412E-06" ixz="1.3145E-05" iyy="0.00012884" iyz="8.5135E-07" izz="5.2207E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/casterwheel.STL" />
+      </geometry>
+      <material name="blue">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/casterwheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="casterwheel_joint" type="fixed">
+    <origin xyz="0.25029 -0.01098 -0.1075" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="casterwheel_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  
+  <link name="lidar_link">
+    <inertial>
+      <origin xyz="0.00050486 -3.7855E-05 -0.025753" rpy="0 0 0" />
+      <mass  value="0.2064" />
+      <inertia ixx="0.00011156" ixy="-1.2701E-07" ixz="-1.6019E-06" iyy="0.00010988" iyz="1.201E-07" izz="0.0001391" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/lidar.STL" />
+      </geometry>
+      <material name="grey">
+      </material>
+    </visual>
+    <collision>
+      <origin  xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/lidar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0.00082049 0.00875 0.12332" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="lidar_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+  
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="-0.015015 -0.00012812 0.00021369" rpy="0 0 0" />
+      <mass value="0.05157" />
+      <inertia ixx="1.5728E-05" ixy="-1.2026E-09" ixz="1.5815E-09" iyy="8.9379E-06" iyz="-2.1887E-10" izz="1.4344E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/imu.STL" />
+      </geometry>
+      <material name="black">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/imu.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0.05082 -0.0047896 0.053918" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  
+  <link name="camerad435i_link">
+    <inertial>
+      <origin xyz="0.0094812 3.7095E-05 -7.9734E-05" rpy="0 0 0" />
+      <mass value="0.032264" />
+      <inertia ixx="2.2098E-05" ixy="-1.4651E-10" ixz="2.902E-10" iyy="1.9467E-06" iyz="8.3417E-11" izz="2.1858E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/camerad435i.STL" />
+      </geometry>
+      <material name="white">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/camerad435i.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camerad435i_joint" type="fixed">
+    <origin xyz="-0.20718 -0.08268 0.17016" rpy="0 0 0" />
+    <parent  link="base_link" />
+    <child link="camerad435i_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  
+  <link name="camerat265_link">
+    <inertial>
+      <origin xyz="0.0061266 3.8568E-05 -1.9004E-05" rpy="0 0 0" />
+      <mass value="0.030988" />
+      <inertia ixx="3.0221E-05" ixy="-1.6541E-10" ixz="4.8935E-11" iyy="1.9363E-06" iyz="9.2265E-11" izz="2.9002E-05" />
+    </inertial>
+    <visual>
+      <origin  xyz="0 0 0"  rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/camerat265.STL" />
+      </geometry>
+      <material name="white">
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://romr_ros/meshes/camerat265.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camerat265_joint" type="fixed">
+    <origin  xyz="-0.20118 0.080908 0.16952" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="camerat265_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+</robot>
+
+

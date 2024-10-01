@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <launch>
-	<param command="$(find xacro)/xacro $(find romr_ros)/urdf/romr_robot.urdf" name="robot_description"/>
+	<param command="$(find xacro)/xacro $(find romr_ros)/urdf/romr_robot.xacro" name="robot_description"/>
 
 	<!-- For cps world  -->
 	<arg name="x" default="0.0" />
