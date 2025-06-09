@@ -61,6 +61,7 @@ git clone https://github.com/LinusNEP/TCC-IRoNL.git
 ```
  **2.  Install TCC-IRoNL dependencies:**
 ```bash
+cd TCC-IRoNL/
 mv install_TCC-IRoNL_deps.sh ~/catkin_ws/
 cd ~/catkin_ws
 bash install_TCC-IRoNL_deps.sh
