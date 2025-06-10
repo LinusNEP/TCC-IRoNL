@@ -21,7 +21,7 @@
 - [Acknowledgement](https://github.com/LinusNEP/TCC-IRoNL#Acknowledgement)
 
 ## TCC-IRoNL
-TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://arxiv.org/abs/2401.11838) for more details.
+TCC-IRoNL is a framework that synergically exploits the capabilities of pre-trained large language models (LLMs) and a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It leverages the LLMs to decode the high-level natural language instructions from humans and abstract them into precise robot-actionable commands or queries. Further, it utilised the VLM to provide a visual and semantic understanding of the robot’s task environment. Refer to the [paper here](https://dl.acm.org/doi/10.1145/3610978.3640723) for more details.
 
 ## Citation
 If you use this work in your research, please cite it using the following BibTeX entry:
@@ -48,7 +48,7 @@ The following instructions are necessary to set up TCC-IRoNL. Please note that C
 
 **1.  Install ROS and the navigation planner:**
 
-TCC-IRoNL can work with any ROS-based mobile robot publishing standard ROS topics. The whole framework is implemented using ROS Noetic. It was also tested using ROS Melodic in a Docker environment. For ROS2, you will need a ros-bridge to bridge the ros2 topics. To install ROS, follow the instructions at the [ROS Wiki](http://wiki.ros.org/ROS/Installation). You will need to install or ensure that you have the ROS navigation planner and its dependencies installed. Install the navigation planner and the dependencies by running the `./planner_dependencies.sh` script. After successful installation, follow the next steps to install TCC-IRoNL.
+TCC-IRoNL can work with any ROS-based mobile robot publishing standard ROS topics. The whole framework is implemented using ROS Noetic. It was also tested using ROS Melodic in a Docker environment. For ROS2, you will need a ROS bridge to bridge the ROS2 topics. To install ROS, follow the instructions at the [ROS Wiki](http://wiki.ros.org/ROS/Installation). You will need to install or ensure that you have the ROS navigation planner and its dependencies installed. Install the navigation planner and the dependencies by running the `./planner_dependencies.sh` script. After successful installation, follow the next steps to install TCC-IRoNL.
 
 **Create a ROS workspace:**
  ```bash
@@ -103,10 +103,10 @@ roslaunch tcc-ironl llm_node.launch
 roslaunch tcc-ironl vlm_node.launch
 rosrun tcc-ironl chatGUI.py
 ```
-Interact with the simulated robot through natural language with the chatGUI interface that will pop up after executing `rosrun tcc-ironl chatGUI.py` above. You can send the robot to a goal location e.g., go to the Secretary's office, move in a circular pattern, where are you now, etc.
+Interact with the simulated robot through natural language with the chatGUI interface that will pop up after executing `rosrun tcc-ironl chatGUI.py` above. You can send the robot to a goal location, e.g., go to the Secretary's office, move in a circular pattern, where are you now, etc.
 
 ### Real-World Robot
-Launch your robot! Ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc." may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can obtain such coordinates information from LiDAR or point-cloud data.
+Launch your robot! Ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc" may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can obtain such coordinate information from LiDAR point cloud data.
 - Configurations: 
   | Topics                         | Publisher           | Subscribers                 | Description                                   | Msg Type                     |
   |--------------------------------|---------------------|-----------------------------|-----------------------------------------------|------------------------------|
@@ -126,7 +126,7 @@ Launch your robot! Ensure that the ROS topics and parametric configurations in t
 - Map frame: `map`
 
 ### Run TCC-IRoNL on your Own Robot
-Configure your robot using the ROS topic configurations described in the table above. Then, follow the instructions to launch **T4 - T6** as shown above and begin interacting with the robot. Keep in mind that sending navigation tasks like "navigate to xxx's office" will require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can extract such coordinate information from LiDAR or point-cloud data. For custom commands such as move forward, turn right etc, and queries, no additional configurations are needed."
+Configure your robot using the ROS topic configurations described in the table above. Then, follow the instructions to launch **T4 - T6** as shown above and begin interacting with the robot. Keep in mind that sending navigation tasks like "navigate to xxx's office" will require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can extract such coordinate information from LiDAR point cloud data. For custom commands such as move forward, turn right, etc, and queries, no additional configurations are needed."
 
 ## License
 ![Creative Commons licenses 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
