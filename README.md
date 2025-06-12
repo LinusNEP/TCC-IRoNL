@@ -101,7 +101,7 @@ Ensure that the virtual environment that was created after installing the TCC-IR
 roslaunch tcc_ros tcc_ros.launch
 roslaunch tcc_ros chatGUI_SR.launch
 ```
-Interact with the simulated robot through natural language. You can start with non-goal-directed commands like "Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc. You could also ask general questions or retrieve data from the robot, e.g., "Tell me about your capabilities", "Report your current orientation", etc. For goal-directed commands, e.g., Go between the Secretary's office and the kitchen twice, etc, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the locations in the configuration file (`config.yaml`).
+Interact with the simulated robot through natural language. You can start with non-goal-directed commands like *"Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc*. You could also ask general questions or retrieve data from the robot, e.g., *"Tell me about your capabilities", "Report your current orientation", etc*. For goal-directed commands, e.g., *Go between the Secretary's office and the kitchen twice, Head to the location (0,3,0) and return to your start location afterwards, etc*, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the location's name in the configuration file (`config.yaml`).
 
  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gazebo-world.jpg">
 
