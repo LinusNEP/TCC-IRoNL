@@ -76,34 +76,33 @@ source devel/setup.bash
 
 ## Run TCC-IRoNL Example Demos
 ### Simulation
-Open six terminal windows (T1-T6) in your workspace directory and run the following:
+Open four terminal windows (T1-T4) in your workspace directory and run the following:
 
-**T1 - T3 (if quadruped robot):**
+**T1 - T2 (if quadruped robot):**
 
 First, make sure to source all the opened terminals `source devel/setup.bash`.
 ```bash
 roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
 roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
-rosrun unitree_guide main_ctrl
 ```
-After running T1 -T3 above, the robot will lie on the floor of the Gazebo world. At the terminal where you ran `rosrun unitree_guide main_ctrl`, press the key '2' on the keyboard to switch the robot's state from Passive(initial state) to FixedStand. After, you can press the '5' key to switch from FixedStand to MoveBase. At this point, the robot is ready to receive navigation commands.
+After running T1 -T2 above, the robot will lie on the floor of the Gazebo world. At the terminal where you ran `roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false`, press the key '2' on the keyboard to switch the robot's state from Passive(initial state) to FixedStand. After, you can press the '5' key to switch from FixedStand to MoveBase. At this point, the robot is ready to receive navigation commands.
 
-**T1 - T3 (if wheeled robot):**
+**T1 (if wheeled robot):**
 ```bash
 source devel/setup.bash
 roslaunch romr_ros romr_navigation.launch
 ```
-For the wheeled robot, you do not need to switch states. After launching `roslaunch romr_ros romr_navigation.launch`, execute T4 - T6, and start interacting with the robot.
+For the wheeled robot, you do not need to switch states. After launching `roslaunch romr_ros romr_navigation.launch`, execute T3 - T4 below, and start interacting with the robot.
 
-**T4 - T6:**
+**T3 - T4:**
 
-Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T4 - T6. Set permissions to the executable scripts (`bash set_permission.sh`). Upon running `roslaunch tcc-ironl llm_node.launch` and `roslaunch tcc-ironl vlm_node.launch`, a menu will appear, allowing you to select LLM options such as OpenAI GPT-2, Google BERT, Facebook RoBERTa, and VLM options such as CLIP, GLIP for execution. To exit, simply press `ctrl + c` and select 0 to terminate the program.
+Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T3 - T4. Upon running `roslaunch tcc_ros chatGUI_SR.launch` below, a menu will appear, allowing you to input either textual or vocal (audio) instructions.
 ```bash
-roslaunch tcc-ironl llm_node.launch
-roslaunch tcc-ironl vlm_node.launch
-rosrun tcc-ironl chatGUI.py
+roslaunch tcc_ros tcc_ros.launch
+roslaunch tcc_ros chatGUI_SR.launch
 ```
-Interact with the simulated robot through natural language with the chatGUI interface that will pop up after executing `rosrun tcc-ironl chatGUI.py` above. You can send the robot to a goal location, e.g., go to the Secretary's office, move in a circular pattern, where are you now, etc.
+Interact with the simulated robot through natural language. You can start with non-goal-directed commands like "Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc. You could also ask general questions or retrieve data from the robot, e.g., "Tell me about your capabilities", "Report your current orientation", etc. For goal-directed commands, e.g., go between the Secretary's office and the kitchen twice, etc, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the locations in the configuration file (`config.yaml`).
+ <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gazebo-world.jpg" width="500px">
 
 ### Real-World Robot
 Launch your robot! Ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc" may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can obtain such coordinate information from LiDAR point cloud data.
