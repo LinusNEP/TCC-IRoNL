@@ -96,16 +96,17 @@ For the wheeled robot, you do not need to switch states. After launching `roslau
 
 **T3 - T4:**
 
-Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T3 - T4. Upon running `roslaunch tcc_ros chatGUI_SR.launch` below, a menu will appear, allowing you to input either textual or vocal (audio) instructions.
+Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T3 - T4. Upon running `roslaunch tcc_ros chatGUI_SR.launch` below, a menu will appear, allowing you to input either textual or vocal (audio) instructions. Note, we have updated both the visual perception node and the large language models (LLMs) to utilise the Segment Anything Model (SAM), as well as the latest GPTs (gpt-40, gpt-40-mini, etc.), deepseek-chat, and llama-2-7b-chat. This is a change from the models (YOLO, GPT-2, ...) mentioned in the original paper. Therefore, you will need to export your LLM API key to ensure compatibility with the updated models: `export API_KEY="your_api_key_here"`. Further, it is also required to include the SAM pre-trained weights (`sam_vit_b_01ec64.pth`) at <your_workspace_path>/TCC-IRoNL/tcc_ros/src/tcc_ros/sam_vit_b_01ec64.pth, otherwise `roslaunch tcc_ros tcc_ros.launch` will throw an error. You can download the checkpoint [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints).
 ```bash
 roslaunch tcc_ros tcc_ros.launch
 roslaunch tcc_ros chatGUI_SR.launch
 ```
-Interact with the simulated robot through natural language. You can start with non-goal-directed commands like "Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc. You could also ask general questions or retrieve data from the robot, e.g., "Tell me about your capabilities", "Report your current orientation", etc. For goal-directed commands, e.g., go between the Secretary's office and the kitchen twice, etc, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the locations in the configuration file (`config.yaml`).
- <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gazebo-world.jpg" width="500px">
+Interact with the simulated robot through natural language. You can start with non-goal-directed commands like "Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc. You could also ask general questions or retrieve data from the robot, e.g., "Tell me about your capabilities", "Report your current orientation", etc. For goal-directed commands, e.g., Go between the Secretary's office and the kitchen twice, etc, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the locations in the configuration file (`config.yaml`).
+
+ <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gazebo-world.jpg">
 
 ### Real-World Robot
-Launch your robot! Ensure that the ROS topics and parametric configurations in the table below are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc" may not require further configuration. However, sending goal navigation tasks such as "navigate to xxx's office" would require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can obtain such coordinate information from LiDAR point cloud data.
+Launch your robot! Ensure that the ROS topics and parametric configurations in the table below and `config.yaml` are available. Sending custom movement commands and queries such as "move forward, backwards, right, what can you see around you? where are you now? etc" may not require further configuration. However, sending goal navigation tasks other than specified coordinates, e.g., head to the location x,y,z or (x,y,z), would require you to update the config file with the approximate `x, y, z` coordinates of the task location. You can obtain such coordinate information from LiDAR point cloud data.
 - Configurations: 
   | Topics                         | Publisher           | Subscribers                 | Description                                   | Msg Type                     |
   |--------------------------------|---------------------|-----------------------------|-----------------------------------------------|------------------------------|
@@ -114,9 +115,8 @@ Launch your robot! Ensure that the ROS topics and parametric configurations in t
   | `/clip_node/recognized_objects`| CLIPNode            | LLMNode                     | CLIPNode objects descriptions                  | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
   | `/llm_input`                   | ChatGUI             | LLMNode                     | User's input commands, queries and tasks      | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
   | `/llm_output`                  | LLMNode             | ChatGUI                     | LLMNode's interpretation of the input command | [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)|
-  | `/depth/image`, `/rgb/image`*  | Observation Source  | CLIPNode, LLMNode, YOLO V8* | Image stream from RGB-D camera                | [sensor_msgs/Image](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html)|
+  | `/depth/image`, `/rgb/image`*  | Observation Source  | CLIPNode, LLMNode           | Image stream from RGB-D camera                | [sensor_msgs/Image](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html)|
   | `/depth/points`                | Observation Source  | LLMNode                     | Point cloud from 3D LiDAR or RGB-D camera     | [sensor_msgs/PointCloud2](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud2.html)|
-  | `/detection_result`            | YOLO V8             | CLIPNode                    | 2D bounding box from YOLO V8 detected objects | [vision_msgs/Detection2DArray](http://docs.ros.org/en/lunar/api/vision_msgs/html/msg/Detection2DArray.html)|
   
 - Observation sources:
     - Ouster 3D LiDAR - `sensor_msgs/PointCloud2`, `sensor_msgs/LaserScan`
@@ -125,7 +125,7 @@ Launch your robot! Ensure that the ROS topics and parametric configurations in t
 - Map frame: `map`
 
 ### Run TCC-IRoNL on your Own Robot
-Configure your robot using the ROS topic configurations described in the table above. Then, follow the instructions to launch **T4 - T6** as shown above and begin interacting with the robot. Keep in mind that sending navigation tasks like "navigate to xxx's office" will require you to update the task dictionary (`task_dict.yaml`) with the approximate `x, y, z` coordinates of the task environment. You can extract such coordinate information from LiDAR point cloud data. For custom commands such as move forward, turn right, etc, and queries, no additional configurations are needed."
+Configure your robot using the ROS topic configurations described above. Then, follow the instructions to launch **T3 - T4** as shown above and begin interacting with the robot. Keep in mind to update the configuration file to adapt to the spatial coordinates of your task environment. For non-goal-directed commands and queries that require no obstacle avoidance and path planning, no additional configurations are needed."
 
 ## License
 ![Creative Commons licenses 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png)
@@ -133,7 +133,7 @@ Configure your robot using the ROS topic configurations described in the table a
 [This work is licensed under a Creative Commons Attribution International 4.0 License.](https://creativecommons.org/licenses/by/4.0/)
 
 ## Acknowledgement
-This work is still in progress, therefore, expect some bugs. However, we would appreciate your kind contribution or raising an issue for such bug.
+This work is still in progress; therefore, expect some bugs. However, we would appreciate your kind contribution or raising an issue for such a bug.
 
 **Thanks to the following repository:**
 - [Unitree_ros](https://github.com/macc-n/ros_unitree.git)
