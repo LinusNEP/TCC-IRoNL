@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+	  <!-- Launch chatGUI -->
+	  <node pkg="tcc_ros" type="chatGUI_SR.py" name="chatGUI" output="screen" />
+</launch>
+

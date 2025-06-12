@@ -1,0 +1,146 @@
+# This script is based on the paper, "The Conversation is the Command: Interacting with Real-World Autonomous Robots Through Natural Language": https://dl.acm.org/doi/abs/10.1145/3610978.3640723
+# Its usage is subject to the  Creative Commons Attribution International 4.0 License.
+
+# config.yaml
+models:
+  # === LLM (Language Model) Configuration ===
+  llm_provider: "openai"  # Options: openai, deepseek, llama.cpp, claude, gemini
+  llm_name: "gpt-4o"      # Example: gpt-4o, deepseek-chat, llama-2-7b-chat, claude-3-opus, gemini-1.5-pro
+  llm_max_tokens: 500
+  llm_temperature: 0
+  llm_endpoint: ""        # Optional - Custom endpoint (for local LLMs like llama.cpp, Ollama etc.)
+  llm_timeout_seconds: 30 # Optional - Request timeout in seconds
+  llm_api_key: ""         # Optional: Required if you want to embed keys
+
+  # === Perception (Computer Vision) ===
+  yolo_checkpoint: "yolov8x.pt"
+  clip_model: "openai/clip-vit-base-patch32"
+  sam_checkpoint: "/home/linus/catkin_ws/src/tcc_ros/src/tcc_ros/sam_vit_b_01ec64.pth"
+
+# ROS topics
+topics:
+  cmd_vel: "/cmd_vel"
+  odom: "/odom"
+  camera_color: "/camera_face/color/image_raw"
+  camera_depth: "/camera_face/depth/image_raw"
+  move_base_client: "move_base"
+
+# Default speeds
+speeds:
+  default_linear_speed: 0.2
+  default_angular_speed: 0.5
+  maximum_speed: 1.0
+  minimum_speed: 0.2
+
+# Perception settings
+perception:
+  detection_confidence_threshold: 0.2
+  device_preference: "cuda"
+  camera_fx: 268
+  camera_fy: 268
+  camera_cx: 464
+  camera_cy: 400
+  camera_frame: "camera_optical_face"
+  base_frame: "camera_face"
+  depth_sigma: 15.0
+  mask_quality: 0.3
+  debug_masks: true
+  sam_confidence: 0.4
+  kf_process_noise: 1e-5
+  energy_threshold: 0.35
+  default_class_labels:
+    - "person"
+    - "chair"
+    - "table"
+    - "door"
+    - "cup"
+    - "bottle"
+    - "sofa"
+    - "bookshelf"
+    - "remote control"
+    - "bench"
+    - "desk"
+  clip_label_set:
+    - "person"
+    - "chair"
+    - "table"
+    - "door"
+    - "cup"
+  color_labels:
+    - "a red object"
+    - "a blue object"
+    - "a green object"
+    - "a yellow object"
+    - "a white object"
+    - "a black object"
+    - "an orange object"
+
+# Goal-directed destinations and coordinates
+destinations:
+  conference_office:
+    display_name: "Conference Office"
+    aliases: ["conference", "meeting room"]
+    coords: {x: 0.0, y: 0.0, z: 0.0}
+  server_room:
+    display_name: "Server Room"
+    aliases: ["server", "server-room", "it room", "servers"]
+    coords: {x: 6.41663, y: 1.83810, z: 0.0}
+  technicians_office:
+    display_name: "Technicians Office"
+    aliases: ["technicians", "tech office"]
+    coords: {x: 6.41663, y: 1.83810, z: 0.0}
+  corridor:
+    display_name: "Corridor"
+    aliases: ["hallway", "passage"]
+    coords: {x: -2.9519989, y: -4.6135330, z: 0.0}
+  secretary_office:
+    display_name: "Secretary Office"
+    aliases: ["secretary", "admin office"]
+    coords: {x: -7.4880, y: -11.7599, z: 0.0}
+  professor_office:
+    display_name: "Professor Office"
+    aliases: ["professor", "prof office"]
+    coords: {x: -1.8086, y: -12.5759, z: 0.0}
+  postdoc_office:
+    display_name: "Postdoc's Office"
+    aliases: ["postdoc", "postdoc office"]
+    coords: {x: -12.3221, y: -10.2211, z: 0.0}
+  phd_office:
+    display_name: "PhD's Office"
+    aliases: ["phd office", "doctoral researchers' office", "phd students office"]
+    coords: {x: -18.2438, y: -11.7617, z: 0.0}
+  printing_room:
+    display_name: "Printing Room"
+    aliases: ["print room", "printing"]
+    coords: {x: -15.81148, y: -4.734699, z: 0.0}
+  workshop:
+    display_name: "Workshop"
+    aliases: ["workshop"]
+    coords: {x: -12.16810, y: 1.61361, z: 0.0}
+  students_office:
+    display_name: "Students Office"
+    aliases: ["students", "student office"]
+    coords: {x: -18.3597, y: 1.2639, z: 0.0}
+  lab_assistance_office:
+    display_name: "Lab assistance's Office"
+    aliases: ["Lab Assistant", "lab assistance office"]
+    coords: {x: -8.2274, y: 2.0348, z: 0.0}
+  kitchen:
+    display_name: "Kitchen"
+    aliases: ["kitchen"]
+    coords: {x: 5.3120069, y: -13.078762, z: 0.0}
+  elevator:
+    display_name: "Elevator"
+    aliases: ["elevator"]
+    coords: {x: 11.79615, y: -11.28947, z: 0.0}
+  toilet:
+    display_name: "Toilet"
+    aliases: ["restroom", "bathroom"]
+    coords: {x: 14.8095, y: -2.67490, z: 0.0}
+  tree:
+    display_name: "Tree"
+    aliases: ["tree"]
+    coords: {x: 11.52289, y: 8.69468, z: 0.0}
+
+
+

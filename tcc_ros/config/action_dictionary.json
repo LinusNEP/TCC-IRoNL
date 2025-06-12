@@ -1,0 +1,24 @@
+{
+  "Action_Dictionary": {
+    "patterns": {
+      "send_image": "send image[.,]?",
+      "move_forward": "move forward\\s*(\\d+(\\.\\d+)?)?\\s*meters?(?:\\s*at\\s*(\\d+(\\.\\d+)?)\\s*m/s)?[.,]?",
+      "move_backward": "move backward\\s*(\\d+(\\.\\d+)?)?\\s*meters?(?:\\s*at\\s*(\\d+(\\.\\d+)?)\\s*m/s)?[.,]?",
+      "turn_left": "turn left\\s*(\\d+(\\.\\d+)?)?\\s*degrees?(?:\\s*at\\s*(\\d+(\\.\\d+)?)\\s*deg/s)?[.,]?",
+      "turn_right": "turn right\\s*(\\d+(\\.\\d+)?)?\\s*degrees?(?:\\s*at\\s*(\\d+(\\.\\d+)?)\\s*deg/s)?[.,]?",
+      "rotate_to_face": "rotate to face the\\s+(.+)",
+      "navigate_to_destination": "navigate to(?: the)?\\s+([a-zA-Z_\\-\\' ]+?)(?=\\s+at\\s+|[.,]|$)(?:\\s+at\\s+(\\d+(\\.\\d+)?)[ ]*m/s)?[.,]?",
+      "go_to_coordinates": "go to coordinates\\s*x:(-?\\d+(\\.\\d+)?),\\s*y:(-?\\d+(\\.\\d+)?)(?:,\\s*z:(-?\\d+(\\.\\d+)?))?",
+      "rotate": "rotate\\s*(\\d+(\\.\\d+)?)?\\s*degrees?(?:\\s*in\\s*a\\s*along\\s*of\\s*radius\\s*(\\d+(\\.\\d+)?)\\s*meters?)?(?:\\s*at\\s*(\\d+(\\.\\d+)?)\\s*(m/s|deg/s))?[.,]?",
+     "circular_motion": "(?i)^(?:move|go|drive|circle(?:\\s+around)?)\\s+(?:in\\s+an?\\s+)?(?:arc|circle|half\\s+circle)(?:\\s*of\\s*\\d+\\s*degrees)?(?:\\s*(?:of|with)\\s*(?:a\\s+)?(?:radius|diameter)(?:\\s*(?:of|with))?\\s+)?(\\d+(?:\\.\\d+)?)\\s*meters?(?:\\s*at\\s*(\\d+(?:\\.\\d+)?)\\s*(m/s|km/h|mph|ft/s))?[.,]?\\s*$",
+      "wait": "^(?:hold on|wait(?: for)?\\s*(\\d+(\\.\\d+)?\\s*(seconds?|secs?|minutes?|mins?|hours?|hrs?)?)?)?[.,]?$",
+      "stop": "stop|halt|emergency stop|abort|cancel",
+      "move_to_object": "(?i)(?:move|go|head)\\s+to\\s+the\\s+detected\\s+((?:\\w+\\s*)+)",
+      "navigate_around_object": "(?i)(?:navigate|move|go|circle|drive) (?:around|round) (?:the )?detected (\\w+)(?: with (\\d+(\\.\\d+)?)m clearance)?",
+      "navigate_around_generic": "(?i)(?:circle|go around|navigate around) (?:the )?(\\w+ \\w+)(?: with (\\d+(\\.\\d+)?)m clearance)?"
+    },
+    "responses": {
+      "action_not_recognized": "I'm sorry, I couldn't understand the action."
+    }
+  }
+}

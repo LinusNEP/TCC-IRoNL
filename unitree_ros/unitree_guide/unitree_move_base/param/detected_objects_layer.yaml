@@ -1,0 +1,6 @@
+detected_objects_layer:
+  enabled: true
+  topic: /detected_objects  # Publish your objects here as PointCloud2/Costmap
+  combination_method: 1
+  obstacle_range: 5.0
+  observation_persistence: 0.5  # Seconds to keep unverified obstacles

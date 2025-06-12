@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	  <!-- Load the YAML file as parameters -->
+	  <rosparam file="$(find tcc_ros)/config/config.yaml" command="load" />
+	  <!-- Launch ReLI -->
+	  <node pkg="tcc_ros" type="tcc_main.py" name="tcc_main" output="screen" />
+</launch>
+
