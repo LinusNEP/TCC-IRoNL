@@ -87,7 +87,8 @@ First, make sure to source all the opened terminals `source devel/setup.bash`.
 source devel/setup.bash
 roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
 ```
-**T2:** ```bash
+**T2:**
+```bash
 source devel/setup.bash
 roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
 ```
