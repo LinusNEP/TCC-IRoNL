@@ -81,7 +81,9 @@ Open four terminal windows (T1-T4) in your workspace directory and run the follo
 **T1 - T2 (if quadruped robot):**
 
 First, make sure to source all the opened terminals `source devel/setup.bash`.
-**T1:** ```bash
+
+**T1:** 
+```bash
 source devel/setup.bash
 roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
 ```
@@ -101,6 +103,7 @@ For the wheeled robot, you do not need to switch states. After launching `roslau
 **T3 - T4:**
 
 Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T3 - T4. Upon running `roslaunch tcc_ros chatGUI_SR.launch` below, a menu will appear, allowing you to input either textual or vocal (audio) instructions. Note, we have updated both the visual perception node and the large language models (LLMs) to utilise the Segment Anything Model (SAM), as well as the latest GPTs (gpt-40, gpt-40-mini, etc.), deepseek-chat, and llama-2-7b-chat. This is a change from the models (YOLO, GPT-2, ...) mentioned in the original paper. Therefore, you will need to export your LLM API key to ensure compatibility with the updated models: `export API_KEY="your_api_key_here"`. Further, it is also required to include the SAM pre-trained weights (`sam_vit_b_01ec64.pth`) at `<your_workspace_path>/TCC-IRoNL/tcc_ros/src/tcc_ros/sam_vit_b_01ec64.pth`, otherwise `roslaunch tcc_ros tcc_ros.launch` will throw an error. You can download the checkpoint [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints).
+
 **T3:**
 ```bash
 source devel/setup.bash
