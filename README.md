@@ -81,8 +81,12 @@ Open four terminal windows (T1-T4) in your workspace directory and run the follo
 **T1 - T2 (if quadruped robot):**
 
 First, make sure to source all the opened terminals `source devel/setup.bash`.
-```bash
+**T1:**```bash
+source devel/setup.bash
 roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
+```
+**T2:**```bash
+source devel/setup.bash
 roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
 ```
 After running T1 -T2 above, the robot will lie on the floor of the Gazebo world. At the terminal where you ran `roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false`, press the key '2' on the keyboard to switch the robot's state from Passive(initial state) to FixedStand. After, you can press the '5' key to switch from FixedStand to MoveBase. At this point, the robot is ready to receive navigation commands.
@@ -97,8 +101,11 @@ For the wheeled robot, you do not need to switch states. After launching `roslau
 **T3 - T4:**
 
 Ensure that the virtual environment that was created after installing the TCC-IRoNL and its dependencies is activated `source TCC-IRoNLEnv/bin/activate` in each of T3 - T4. Upon running `roslaunch tcc_ros chatGUI_SR.launch` below, a menu will appear, allowing you to input either textual or vocal (audio) instructions. Note, we have updated both the visual perception node and the large language models (LLMs) to utilise the Segment Anything Model (SAM), as well as the latest GPTs (gpt-40, gpt-40-mini, etc.), deepseek-chat, and llama-2-7b-chat. This is a change from the models (YOLO, GPT-2, ...) mentioned in the original paper. Therefore, you will need to export your LLM API key to ensure compatibility with the updated models: `export API_KEY="your_api_key_here"`. Further, it is also required to include the SAM pre-trained weights (`sam_vit_b_01ec64.pth`) at `<your_workspace_path>/TCC-IRoNL/tcc_ros/src/tcc_ros/sam_vit_b_01ec64.pth`, otherwise `roslaunch tcc_ros tcc_ros.launch` will throw an error. You can download the checkpoint [here](https://github.com/facebookresearch/segment-anything?tab=readme-ov-file#model-checkpoints).
-```bash
+**T3:**```bash
+source devel/setup.bash
 roslaunch tcc_ros tcc_ros.launch
+```
+**T4:**```bash
 roslaunch tcc_ros chatGUI_SR.launch
 ```
 Interact with the simulated robot through natural language. You can start with non-goal-directed commands like *"Move forward 1.5m at 0.2m/s", "Move backwards 2m and thereafter move in a circular pattern of diameter 2m", etc*. You could also ask general questions or retrieve data from the robot, e.g., *"Tell me about your capabilities", "Report your current orientation", etc*. For goal-directed commands, e.g., *Go between the Secretary's office and the kitchen twice, Head to the location (0,3,0) and return to your start location afterwards, etc*, use the following environment layout as a reference. You could also adapt your own Gazebo world. For this, you will have to define the location's name in the configuration file (`config.yaml`).
