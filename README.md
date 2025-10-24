@@ -13,8 +13,8 @@
 </p>
 
 <div align="center" style="display: flex; justify-content: center;">
-  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gifAnimation1.gif" width="500px" alt="Animation 1" style="margin-right: 10px;" /> 
-  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/real_world_optimize.gif" width="500px" alt="Real World Optimize" />
+  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gifAnimation1.gif" width="200px" alt="Animation 1" style="margin-right: 10px;" /> 
+  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/real_world_optimize.gif" width="200px" alt="Real World Optimize" />
 </div>
 
 ## Contents
