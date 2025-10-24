@@ -1,14 +1,22 @@
 <p align="center">
-  <h2 align="center">The Conversation is the Command: Interacting with Real-World Autonomous Robots through Natural Language (TCC-IRoNL)</h2>
+  <h2>The Conversation is the Command: Interacting with Real-World Autonomous Robots through Natural Language (TCC-IRoNL)</h2>
 </p>
   
 <p align="center">
-  <h3 align="center"> | <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> | <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> | <a href="https://linusnep.github.io/TCC-IRoNL/">Project Website</a> | <a href="https://osf.io/cmbw6/">Data & Videos</a> | <a href="https://creativecommons.org/licenses/by/4.0/">License</a> | </h3>
-  <div align="center"></div>
-                                                                                                      
-|<img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gifAnimation1.gif" width="500px"> | <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/real_world_optimize.gif" width="500px">|
-
+  <h3>
+    | <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> | 
+    <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> | 
+    <a href="https://linusnep.github.io/TCC-IRoNL/">Project Website</a> | 
+    <a href="https://osf.io/cmbw6/">Data & Videos</a> | 
+    <a href="https://creativecommons.org/licenses/by/4.0/">License</a> | 
+  </h3>
 </p>
+
+<div align="center" style="display: flex; justify-content: center;">
+  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/gifAnimation1.gif" width="500px" alt="Animation 1" style="margin-right: 10px;" /> 
+  <img src="https://github.com/LinusNEP/TCC_IRoNL/blob/main/Figures/real_world_optimize.gif" width="500px" alt="Real World Optimize" />
+</div>
+
 ## Contents
 
 - [TCC-IRoNL](https://github.com/LinusNEP/TCC-IRoNL#TCC-IRoNL)
