@@ -44,7 +44,6 @@ class DestinationResolver:
         """Return (slug, how) or (None, reason)."""
         q = self._norm(user_phrase)
 
-        # direct alias hit
         if q in self.alias_map:
             return self.alias_map[q], "exact"
 
