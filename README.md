@@ -1,7 +1,15 @@
 <p align="center">
   <h2>The Conversation is the Command: Interacting with Real-World Autonomous Robots through Natural Language (TCC-IRoNL)</h2>
 </p>
-  
+[![TCC IRoNL](https://img.shields.io/badge/TCC%20IRoNL-Website-lightblue?style=flat&logo=globe&logoColor=white)](https://linusnep.github.io/TCC-IRoNL/)
+[![ROS 1](https://img.shields.io/badge/ROS-Noetic-brightgreen.svg)](http://www.ros.org/)
+[![ROS 2](https://img.shields.io/badge/ROS%202-Humble-blue.svg)](https://index.ros.org/doc/ros2/)
+[![Python](https://img.shields.io/badge/Python-≥3.8-blue.svg)](https://www.python.org/)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![PyPI](https://img.shields.io/badge/PyPI-PIP-orange.svg)](https://pypi.org/)
+[![GitHub Stars](https://img.shields.io/github/stars/LinusNEP/TCC-IRoNL?style=social)](https://linusnep.github.io/TCC-IRoNL/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/LinusNEP/TCC-IRoNL.svg)](https://linusnep.github.io/TCC-IRoNL/commits)
+
 <p align="center">
   <h3>
     | <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> | 
