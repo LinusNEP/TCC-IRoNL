@@ -11,7 +11,7 @@
 <p align="center">
   <h3>
     | <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> | 
-    <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> | 
+    <a href="https://arxiv.org/abs/2401.11838"><img src="https://arxiv.org/static/arxiv_logo.png" alt="ArXiv" style="width:16px; height:16px;"> ArXiv</a> | 
     <a href="https://linusnep.github.io/TCC-IRoNL/">Project Website</a> | 
     <a href="https://osf.io/cmbw6/">Data & Videos</a> | 
     <a href="https://creativecommons.org/licenses/by/4.0/">License</a> | 
