@@ -9,7 +9,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/LinusNEP/TCC-IRoNL.svg)](https://github.com/LinusNEP/TCC-IRoNL/commits)
 
 <p align="center">
-  <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> •
+ • <a href="https://doi.org/10.1145/3610978.3640723">Paper</a> •
   <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> •
   <a href="https://linusnep.github.io/TCC-IRoNL/">Project Website</a> •
   <a href="https://osf.io/cmbw6/">Data &amp; Videos</a> •
@@ -45,7 +45,7 @@ TCC-IRoNL is a framework that combines pre-trained large language models (LLMs) 
 In the published paper, we built on YOLO and GPT-2. Since then, the repository has been updated to use:
 
 - **Vision:** [Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) in place of YOLO
-- **Language models:** the latest GPT models (e.g. `gpt-4o`, `gpt-4o-mini`), `deepseek-chat`, and `llama-2-7b-chat` in place of GPT-2
+- **Language models:** the latest GPT models (e.g. `gpt-4o`, `gemini`), `deepseek-chat`, and `llama-2-7b-chat` in place of GPT-2
 
 You will therefore need an API key for your chosen LLM provider and the SAM pre-trained weights, see [Installation](#installation).
 
@@ -55,8 +55,8 @@ If you use this work in your research, please cite:
 
 ```bibtex
 @inproceedings{10.1145/3610978.3640723,
-author = {Linus, Nwankwo and Elmar, Rueckert},
-title = {The Conversation is the Command: Interacting with Real-World Autonomous Robot Through Natural Language},
+author={Nwankwo, Linus and Rueckert, Elmar}
+title = {The Conversation is the Command: Interacting with Real-World Autonomous Robots Through Natural Language},
 year = {2024},
 isbn = {979-8-4007-0323-2/24/03},
 publisher = {Association for Computing Machinery},
