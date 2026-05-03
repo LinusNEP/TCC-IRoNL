@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<launch>
+  <!--
+    ROMR full bringup: URDF/TF tree + rosserial + odom + cmd_vel watchdog.
+
+    Before launching:
+      1. Export ROS_MASTER_URI and ROS_IP to the Nano's LAN IP, e.g.:
+           export ROS_MASTER_URI=http://192.168.1.42:11311
+           export ROS_IP=192.168.1.42
+      2. Phone and Nano on the same WiFi.
+      3. ODrive powered, Arduino flashed with ros_mobile_control.ino.
+
+    Arming:
+      Motors remain IDLE until you publish true on /robot/arm.
+      From a shell:
+        rostopic pub -1 /robot/arm std_msgs/Bool "data: true"
+      From ROS-Mobile app: Button widget, topic=/robot/arm,
+      type=std_msgs/Bool, on-press=true, on-release=false (dead-man).
+
+    Teleop:
+      ROS-Mobile Joystick widget publishes to /cmd_vel_raw
+      -> cmd_vel_watchdog -> /cmd_vel -> Arduino
+  -->
+
+  <!-- ============ Robot description and TF tree ============ -->
+  <!--
+    URDF describes the robot's geometry. robot_state_publisher reads it
+    and broadcasts the TF tree above base_link (base_link -> laser_link,
+    base_link -> camera_link, wheel joints, etc.). Required for sensor integration, SLAM, and autonomous navigation.
+  -->
+  <arg name="urdf_file" default="$(find romr_ros)/urdf/romr_robot.xacro"/>
+  <param name="robot_description" command="xacro $(arg urdf_file)"/>
+
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!--
+    joint_state_publisher provides joint angles for non-driven joints.
+    For ROMR's wheel joints, the default source is the odom node publishing wheel positions.
+  -->
+  <node name="joint_state_publisher"
+        pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+  <!-- ============ Low-level: Arduino ============ -->
+  <arg name="port" default="/dev/ttyACM0"/>
+  <arg name="baud" default="500000"/>
+
+  <node name="rosserial_arduino"
+        pkg="rosserial_python" type="serial_node.py"
+        output="screen" respawn="true">
+    <param name="port" value="$(arg port)"/>
+    <param name="baud" value="$(arg baud)"/>
+  </node>
+
+  <!-- ============ Wheel velocity -> /odom + TF (odom->base_link) ============ -->
+  <node name="romr_odom"
+        pkg="romr_bringup" type="romr_odom_node.py"
+        output="screen">
+    <param name="wheel_base" value="0.300"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="publish_tf" value="true"/>
+  </node>
+
+  <!-- ============ /cmd_vel watchdog (safety for WiFi teleop) ============ -->
+  <arg name="cmd_vel_timeout" default="0.5"/>
+  <node name="cmd_vel_watchdog"
+        pkg="romr_bringup" type="cmd_vel_watchdog.py"
+        output="screen">
+    <param name="timeout" value="$(arg cmd_vel_timeout)"/>
+    <remap from="cmd_vel_in"  to="cmd_vel_raw"/>
+    <remap from="cmd_vel_out" to="cmd_vel"/>
+  </node>
+
+  <!-- ============ External Sensors ============ -->
+  <!--
+  <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+  -->
+
+</launch>
+

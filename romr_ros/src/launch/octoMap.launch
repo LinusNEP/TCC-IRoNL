@@ -1,0 +1,16 @@
+<?xml version = "1.0"?>
+<launch>
+  <node name="octomap_server" pkg="octomap_server" type="octomap_server_node" output="screen">
+    <!-- Topics -->
+    <remap from="scan" to="/scan"/>
+    <remap from="cloud_in" to="/depth/points"/>
+
+    <!-- OctoMap resolution (can be adjusted) -->
+    <param name="resolution" value="0.05"/>
+    <param name="occupancy_thres" type="double" value="0.5"/>
+    <param name="base_frame_id" type="string" value="base_link"/>
+    <param name="frame_id" type="string" value="map"/>
+    <param name="sensor_model/max_range" value="5.0" />
+  </node>
+  
+</launch>

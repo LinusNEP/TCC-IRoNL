@@ -1,0 +1,187 @@
+<?xml version="1.0" ?>
+<robot name="romr_ros" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<!-- ************ romr differential drive plugin ************* -->
+
+<gazebo>
+  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <updateRate>50</updateRate>
+    <leftJoint>leftwheel_joint</leftJoint>
+    <rightJoint>rightwheel_joint</rightJoint>
+    <wheelSeparation>0.30</wheelSeparation>
+    <wheelDiameter>0.1610</wheelDiameter>
+    <wheelAcceleration>1.0</wheelAcceleration>
+    <wheelTorque>20</wheelTorque>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <robotBaseFrame>base_link</robotBaseFrame>
+    <odometrySource>1</odometrySource>
+    <publishWheelTF>false</publishWheelTF>
+    <publishWheelJointState>false</publishWheelJointState>
+    <publishOdom>true</publishOdom>
+    <publishTf>1</publishTf>
+   <publishOdomTF>true</publishOdomTF>
+    <publishWheelJointState>true</publishWheelJointState>
+    <legacyMode>false</legacyMode>
+     <alwaysOn>true</alwaysOn>
+   <!-- <odometrySource>world</odometrySource> -->
+    <rosDebugLevel>Debug</rosDebugLevel>
+    <broadcastTF>true</broadcastTF>
+  </plugin>
+</gazebo>
+
+<!-- ***********  romr lidar sensor plugin ************* -->
+
+ <gazebo reference="lidar_link">
+    <sensor type="ray" name="rplidar_a2"> 
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>  
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle> 
+            <max_angle>3.14159</max_angle>  
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.15</min>
+          <max>16.0</max>
+          <resolution>0.1</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+        <topicName>/scan</topicName> 
+        <frameName>lidar_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+<!-- ************* IMU sensor plugin ***************** -->
+
+<gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+<!-- ********************* Camera sensor plugin ******************* -->
+<!--
+<gazebo reference="camerat265_link">
+  <sensor type="camera" name="camera1">
+    <update_rate>30.0</update_rate>
+    <camera name="head">
+      <horizontal_fov>1.3962634</horizontal_fov>
+      <image>
+        <width>640</width>
+        <height>320</height>
+        <format>R8G8B8</format>  --> <!-- 8 bits RED, 8 bits Green, and 8 bits Blue -->
+     <!-- </image>
+      <clip>
+        <near>0.02</near>
+        <far>300</far>
+      </clip>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.007</stddev>
+    </noise>
+    </camera> -->
+   <!-- <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>0.0</updateRate>
+      <cameraName>romr/camera</cameraName>
+      <imageTopicName>image_raw</imageTopicName>
+      <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+      <frameName>camerat265_link</frameName>
+      <hackBaseline>0.07</hackBaseline>
+      <distortionK1>0.0</distortionK1>
+      <distortionK2>0.0</distortionK2>
+      <distortionK3>0.0</distortionK3>
+      <distortionT1>0.0</distortionT1>
+      <distortionT2>0.0</distortionT2>
+    </plugin>
+  </sensor>
+</gazebo> 
+  -->
+
+ <gazebo>
+  <plugin name="gps_plugin" filename="libgazebo_ros_gps.so">
+    <!-- The topic on which the GPS data will be published -->
+    <rosTopic>gps/data</rosTopic>
+  </plugin>
+</gazebo>
+  
+<gazebo reference="camerad435i_link">
+  <sensor type="depth" name="camerad435i">
+   <cameraName>d435i</cameraName>
+   <always_on>1</always_on>
+    <visualize>true</visualize>
+    <update_rate>30.0</update_rate>
+    <camera>
+      <horizontal_fov>1.20428</horizontal_fov> <!--RGB sensor FOV (H × V): 69° × 42° -->
+      <vertical_fov>0.733038</vertical_fov>
+      <image>
+        <width>1920</width>
+        <height>1080</height>
+        <format>R8G8B8</format> 
+      </image>
+      <depth_camera>
+
+      </depth_camera>
+      <clip>
+        <near>0.02</near>
+        <far>30</far>
+      </clip>
+    </camera>
+    <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>30.0</updateRate>
+    <!--  <frameName>camera_link_optical</frameName>  -->
+      <imageTopicName>rgb/image</imageTopicName>
+      <depthImageTopicName>depth/image</depthImageTopicName>
+      <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+      <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
+      <pointCloudTopicName>depth/points</pointCloudTopicName>
+      <frameName>camera_rgbd_frame</frameName> 
+      <pointCloudCutoff>0.5</pointCloudCutoff>
+      <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+      <hackBaseline>0.07</hackBaseline>
+      <distortionK1>0.0</distortionK1>
+      <distortionK2>0.0</distortionK2>
+      <distortionK3>0.0</distortionK3>
+      <distortionT1>0.0</distortionT1>
+      <distortionT2>0.0</distortionT2>
+      <focalLength>0</focalLength>  
+      <min_depth>0.001</min_depth>
+      <max_depth>100.0</max_depth>
+    </plugin>
+  </sensor>
+</gazebo>
+
+</robot>
+
+

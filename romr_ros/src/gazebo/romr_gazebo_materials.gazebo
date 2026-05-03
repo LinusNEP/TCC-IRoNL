@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<robot name="romr_ros" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="base_link_color" value="Gazebo/White" />
+<xacro:property name="camerad435i_link_color" value="Gazebo/White" />
+<xacro:property name="camerat265_link_color" value="Gazebo/White" />
+<xacro:property name="lidar_color" value="Gazebo/LightBlueLaser" />
+<xacro:property name="imu_link_color" value="Gazebo/Black" />
+<xacro:property name="wheels_link_color" value="Gazebo/Black" />
+<xacro:property name="casterwheel_link_color" value="Gazebo/Blue" />
+
+<gazebo reference="base_link">
+  <material>${base_link_color}</material>
+</gazebo>
+
+<gazebo reference="camerad435i_link">
+  <material>${camerad435i_link_color}</material>
+</gazebo>
+
+<gazebo reference="imu_link">
+  <material>${imu_link_color}</material>
+</gazebo>
+
+<gazebo reference="rightwheel_link">
+  <material>${wheels_link_color}</material>
+</gazebo>
+
+<gazebo reference="leftwheel_link">
+  <material>${wheels_link_color}</material>
+</gazebo>
+
+<gazebo reference="casterwheel_link">
+  <material>${casterwheel_link_color}</material>
+</gazebo>
+
+<gazebo reference="lidar_link">
+  <material>${lidar_color}</material>
+</gazebo>
+
+</robot>
