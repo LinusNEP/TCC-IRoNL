@@ -2,12 +2,6 @@
 
 > **TCC-IRoNL leverages pre-trained large language models (LLMs) with a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It utilises the LLM to decode high-level natural-language instructions and abstract them into precise robot-actionable commands or queries, and the VLM to provide visual and semantic understanding of the robot's task environment.**
 
-[![TCC IRoNL](https://img.shields.io/badge/TCC%20IRoNL-Website-lightblue?style=flat&logo=globe&logoColor=white)](https://linusnep.github.io/TCC-IRoNL/)
-[![ROS](https://img.shields.io/badge/ROS-Noetic-brightgreen.svg)](http://www.ros.org/)
-[![Python 3.8+](https://img.shields.io/badge/Python-≥3.8-blue.svg)](https://www.python.org/)
-[![CUDA](https://img.shields.io/badge/CUDA-Required-green.svg)](https://developer.nvidia.com/cuda-downloads)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-
 <p align="center">
   <a href="https://doi.org/10.1145/3610978.3640723">📄 Paper (HRI '24)</a> &nbsp;|&nbsp;
   <a href="https://arxiv.org/abs/2401.11838">ArXiv</a> &nbsp;|&nbsp;
