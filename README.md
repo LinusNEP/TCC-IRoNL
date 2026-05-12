@@ -1,6 +1,12 @@
 # TCC-IRoNL: The Conversation is the Command
 
-> **TCC-IRoNL leverages pre-trained large language models (LLMs) with a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It utilises the LLM to decode high-level natural-language instructions and abstract them into precise robot-actionable commands or queries, and the VLM to provide visual and semantic understanding of the robot's task environment.**
+> **TCC-IRoNL** leverages pre-trained large language models (LLMs) with a multimodal vision-language model (VLM) to enable humans to interact naturally with autonomous robots through conversational dialogue. It utilises the LLM to decode high-level natural-language instructions and abstract them into precise robot-actionable commands or queries, and the VLM to provide visual and semantic understanding of the robot's task environment.
+
+[![TCC IRoNL](https://img.shields.io/badge/TCC%20IRoNL-Website-lightblue?style=flat&logo=globe&logoColor=white)](https://linusnep.github.io/TCC-IRoNL/)
+[![ROS](https://img.shields.io/badge/ROS-Noetic-brightgreen.svg)](http://www.ros.org/)
+[![Python 3.8+](https://img.shields.io/badge/Python-≥3.8-blue.svg)](https://www.python.org/)
+[![CUDA](https://img.shields.io/badge/CUDA-Required-green.svg)](https://developer.nvidia.com/cuda-downloads)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 <p align="center">
   <a href="https://doi.org/10.1145/3610978.3640723">📄 Paper (HRI '24)</a> &nbsp;|&nbsp;
@@ -26,7 +32,7 @@
 - [Advanced Installation](#advanced-installation)
   - [System Requirements](#system-requirements)
   - [Step-by-Step Setup](#step-by-step-setup)
-- [Run the Demos](#run-the-demos)
+- [Run Demos](#run-demos)
   - [Simulation: Unitree Go1 Quadruped](#simulation-unitree-go1-quadruped)
   - [Simulation: ROMR Wheeled Robot](#simulation-romr-wheeled-robot)
   - [Example Commands](#example-commands)
@@ -56,6 +62,10 @@ The fastest way to get started is using our pre-configured Docker environment.
 - NVIDIA GPU with CUDA 11.8+
 - [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) installed
 - Docker and Docker Compose installed
+- Your user added to the `docker` group, e.g.
+  ```bash
+  sudo usermod -aG docker $USER && newgrp docker
+  ```
 
 ### 1. Clone the Repository
 
@@ -67,28 +77,38 @@ cd TCC-IRoNL
 ### 2. Configure Your API Key
 
 ```bash
-cp .env.tcc-ironl-denv .env
+cp env.tcc-ironl-denv .env
 # Edit .env and add your LLM API key:
 # OPENAI_API_KEY=sk-...
-# Or: DEEPSEEK_API_KEY=... / GEMINI_API_KEY=... / etc.
+# Or one of: DEEPSEEK_API_KEY, GEMINI_API_KEY, ANTHROPIC_API_KEY
 nano .env
 ```
 
-### 3. Launch with Docker Compose
+### 3. Create the models directory
+
+The Docker services mount a local `./models` directory into the containers for SAM weights and other assets. Create it before launching compose:
+
+```bash
+mkdir -p models
+```
+
+### 4. Launch with Docker Compose
 
 ```bash
 docker compose up --build
 ```
 
 This starts all services automatically:
+- ROS core
 - Gazebo simulation world
 - ROS navigation stack
 - LLM/VLM processing node
-- Chat GUI (accessible at `http://localhost:8080`)
+- Chat GUI
 
-### 4. Start Chatting
+### 5. Start Chatting
 
-Open your browser to `http://localhost:8080` and try:
+Once everything is up, interact with the robot using the chat GUI launched by
+the `chat-gui` service, e.g.:
 
 > **"Move forward 1.5 meters at 0.2 m/s"**
 >
@@ -120,7 +140,13 @@ Follow the [official ROS Noetic installation guide](http://wiki.ros.org/noetic/I
 
 ```bash
 sudo apt update
-sudo apt install -y ros-noetic-navigation ros-noetic-move-base ros-noetic-amcl     ros-noetic-map-server ros-noetic-gmapping ros-noetic-teb-local-planner
+sudo apt install -y \
+    ros-noetic-navigation \
+    ros-noetic-move-base \
+    ros-noetic-amcl \
+    ros-noetic-map-server \
+    ros-noetic-gmapping \
+    ros-noetic-teb-local-planner
 ```
 
 #### 2. Create Workspace & Clone
@@ -163,8 +189,8 @@ export OPENAI_API_KEY="sk-your-key-here"
 echo 'export OPENAI_API_KEY="sk-your-key-here"' >> ~/.bashrc
 source ~/.bashrc
 
-# Option C: Use .env file (supported by our launch scripts)
-cp ~/catkin_ws/src/TCC-IRoNL/.env.tcc-ironl-env ~/catkin_ws/.env
+# Option C: Use .env file
+cp ~/catkin_ws/src/TCC-IRoNL/env.tcc-ironl-denv ~/catkin_ws/.env
 nano ~/catkin_ws/.env
 ```
 
@@ -174,6 +200,7 @@ Supported providers: `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `GEMINI_API_KEY`, `AN
 
 ```bash
 cd ~/catkin_ws
+rosdep install --from-paths src --ignore-src -r -y
 catkin_make
 source devel/setup.bash
 ```
@@ -185,9 +212,9 @@ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 ---
 
-## Run the Demos
+## Run Demos
 
-### Simulation (Unitree Go1 Quadruped)
+### Simulation: Unitree Go1 Quadruped
 
 Open **four terminals** in your workspace directory. Source the workspace in **every terminal**:
 
@@ -214,7 +241,7 @@ source ~/catkin_ws/TCC-IRoNLEnv/bin/activate
 
 The robot is now ready to receive commands!
 
-### Simulation (ROMR Wheeled Robot)
+### Simulation: ROMR Wheeled Robot
 
 | Terminal | Command |
 |----------|---------|
@@ -375,15 +402,6 @@ series = {HRI '24}
 ## Contributing
 
 Bug reports and contributions are welcome! Please open an [issue](https://github.com/LinusNEP/TCC-IRoNL/issues) or submit a pull request.
-
-### Development Setup
-
-```bash
-git clone https://github.com/LinusNEP/TCC-IRoNL.git
-cd TCC-IRoNL
-pre-commit install 
-pytest tests/        
-```
 
 ---
 

@@ -1,11 +1,24 @@
-version: '3.8'
-
 services:
-  # ROS Core + Gazebo Simulation World
+  # ROS Core (shared ROS master)
+  roscore:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.base
+    image: tcc-ironl-base:latest
+    container_name: tcc-ironl-roscore
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        roscore
+      "
+
+  # Gazebo Simulation World
   gazebo:
     build:
       context: .
-      dockerfile: docker/Dockerfile.gazebo
+      dockerfile: Docker/Dockerfile.gazebo
+    image: tcc-ironl-gazebo:latest
     container_name: tcc-ironl-gazebo
     runtime: nvidia
     environment:
@@ -30,7 +43,8 @@ services:
   navigation:
     build:
       context: .
-      dockerfile: docker/Dockerfile.base
+      dockerfile: Docker/Dockerfile.base
+    image: tcc-ironl-base:latest
     container_name: tcc-ironl-navigation
     runtime: nvidia
     environment:
@@ -51,11 +65,12 @@ services:
     depends_on:
       - gazebo
 
-  # LLM/VLM Backend Node
+  # LLM / VLM Backend Node
   llm-backend:
     build:
       context: .
-      dockerfile: docker/Dockerfile.base
+      dockerfile: Docker/Dockerfile.base
+    image: tcc-ironl-base:latest
     container_name: tcc-ironl-llm
     runtime: nvidia
     environment:
@@ -84,10 +99,9 @@ services:
   chat-gui:
     build:
       context: .
-      dockerfile: docker/Dockerfile.base
+      dockerfile: Docker/Dockerfile.base
+    image: tcc-ironl-base:latest
     container_name: tcc-ironl-chat
-    ports:
-      - "8080:8080"
     environment:
       - ROS_MASTER_URI=http://localhost:11311
     network_mode: host
@@ -101,16 +115,3 @@ services:
       "
     depends_on:
       - llm-backend
-
-  # ROS Core (shared ROS master)
-  roscore:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.base
-    container_name: tcc-ironl-roscore
-    network_mode: host
-    command: >
-      bash -c "
-        source /opt/ros/noetic/setup.bash &&
-        roscore
-      "
