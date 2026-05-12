@@ -23,7 +23,7 @@
 
 > **Status:** This work is in active development, expect occasional bugs. Bug reports and contributions via GitHub Issues are very welcome.
 
----
+-
 
 ## Contents
 
@@ -50,7 +50,7 @@
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
----
+-
 
 ## Quick Install
 
@@ -116,7 +116,7 @@ the `chat-gui` service, e.g.:
 >
 > **"What can you see around you?"**
 
----
+-
 
 ## Advanced Installation
 
@@ -210,7 +210,7 @@ Add to `~/.bashrc` for persistence:
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
----
+-
 
 ## Run Demos
 
@@ -272,7 +272,7 @@ Use the environment layout below as a reference, or adapt your own Gazebo world 
   <img src="https://github.com/LinusNEP/TCC-IRoNL/blob/main/Figures/gazebo-world.jpg" alt="Gazebo world layout" />
 </p>
 
----
+-
 
 ## Real-World Robot Deployment
 
@@ -310,7 +310,7 @@ locations:
 
 Then launch only the TCC-IRoNL nodes (T3 and T4 from above).
 
----
+-
 
 ## Troubleshooting
 
@@ -363,7 +363,7 @@ sudo apt install -y nvidia-container-toolkit
 sudo systemctl restart docker
 ```
 
----
+-
 
 ## Updates Since Publication
 
@@ -373,7 +373,7 @@ sudo systemctl restart docker
 | Language Model | GPT-2 | **GPT-4o, Gemini, DeepSeek, Llama-2-7B** |
 | Segmentation | Bounding boxes | **Pixel-level masks** |
 
----
+-
 
 ## Citation
 
@@ -397,19 +397,19 @@ series = {HRI '24}
 }
 ```
 
----
+-
 
 ## Contributing
 
 Bug reports and contributions are welcome! Please open an [issue](https://github.com/LinusNEP/TCC-IRoNL/issues) or submit a pull request.
 
----
+-
 
 ## License
 
 This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
----
+-
 
 ## Acknowledgements
 
