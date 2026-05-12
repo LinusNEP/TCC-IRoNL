@@ -1,0 +1,84 @@
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
+
+# Prevent interactive prompts during build
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    # ROS Noetic dependencies
+    curl \
+    gnupg2 \
+    lsb-release \
+    software-properties-common \
+    # Build tools
+    build-essential \
+    cmake \
+    git \
+    wget \
+    # Python
+    python3.8 \
+    python3.8-dev \
+    python3.8-venv \
+    python3-pip \
+    # ROS tools
+    ros-noetic-desktop-full \
+    ros-noetic-navigation \
+    ros-noetic-move-base \
+    ros-noetic-amcl \
+    ros-noetic-map-server \
+    ros-noetic-gmapping \
+    ros-noetic-teb-local-planner \
+    ros-noetic-robot-state-publisher \
+    ros-noetic-joint-state-publisher \
+    ros-noetic-xacro \
+    # GUI support
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    libgtk-3-0 \
+    # Audio
+    portaudio19-dev \
+    libasound2-dev \
+    # Utilities
+    nano \
+    vim \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+# Initialize rosdep
+RUN rosdep init || true && rosdep update
+
+# Set up ROS environment
+RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
+
+# Create catkin workspace
+RUN mkdir -p /root/catkin_ws/src
+WORKDIR /root/catkin_ws/src
+
+# Copy source code
+COPY . /root/catkin_ws/src/TCC-IRoNL/
+
+# Install Python dependencies
+WORKDIR /root/catkin_ws
+RUN bash src/TCC-IRoNL/scripts/install_python_deps.sh
+
+# Build workspace
+RUN /bin/bash -c "
+    source /opt/ros/noetic/setup.bash && \
+    catkin_make
+"
+
+# Source workspace in bashrc
+RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
+
+# Download SAM weights if not present
+RUN mkdir -p /root/catkin_ws/src/TCC-IRoNL/tcc_ros/src/tcc_ros/models && \
+    if [ ! -f /root/catkin_ws/src/TCC-IRoNL/tcc_ros/src/tcc_ros/models/sam_vit_b_01ec64.pth ]; then \
+        wget -q https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth \
+        -O /root/catkin_ws/src/TCC-IRoNL/tcc_ros/src/tcc_ros/models/sam_vit_b_01ec64.pth; \
+    fi
+
+WORKDIR /root/catkin_ws
+
+# Default command
+CMD ["/bin/bash", "-c", "source /opt/ros/noetic/setup.bash && source /root/catkin_ws/devel/setup.bash && /bin/bash"]

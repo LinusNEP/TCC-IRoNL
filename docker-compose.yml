@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # ROS Core + Gazebo Simulation World
+  gazebo:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.gazebo
+    container_name: tcc-ironl-gazebo
+    runtime: nvidia
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./models:/root/catkin_ws/src/TCC-IRoNL/models:ro
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        source /root/catkin_ws/devel/setup.bash &&
+        roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
+      "
+    depends_on:
+      - roscore
+
+  # ROS Navigation Stack
+  navigation:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.base
+    container_name: tcc-ironl-navigation
+    runtime: nvidia
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        source /root/catkin_ws/devel/setup.bash &&
+        sleep 10 &&
+        roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
+      "
+    depends_on:
+      - gazebo
+
+  # LLM/VLM Backend Node
+  llm-backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.base
+    container_name: tcc-ironl-llm
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ./models:/root/catkin_ws/src/TCC-IRoNL/models:ro
+      - ./.env:/root/catkin_ws/.env:ro
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        source /root/catkin_ws/devel/setup.bash &&
+        source /root/catkin_ws/TCC-IRoNLEnv/bin/activate &&
+        sleep 20 &&
+        roslaunch tcc_ros tcc_ros.launch
+      "
+    depends_on:
+      - navigation
+
+  # Chat GUI Web Interface
+  chat-gui:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.base
+    container_name: tcc-ironl-chat
+    ports:
+      - "8080:8080"
+    environment:
+      - ROS_MASTER_URI=http://localhost:11311
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        source /root/catkin_ws/devel/setup.bash &&
+        source /root/catkin_ws/TCC-IRoNLEnv/bin/activate &&
+        sleep 25 &&
+        roslaunch tcc_ros chatGUI_SR.launch
+      "
+    depends_on:
+      - llm-backend
+
+  # ROS Core (shared ROS master)
+  roscore:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.base
+    container_name: tcc-ironl-roscore
+    network_mode: host
+    command: >
+      bash -c "
+        source /opt/ros/noetic/setup.bash &&
+        roscore
+      "
