@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<robot name="romr_ros" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<!-- ****************** romr base transmission*******************  -->
+<transmission name="rightwheel_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="rightwheel_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="rightwheel_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+<transmission name="leftwheel_joint_tran">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="leftwheel_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="leftwheel_joint_actr">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+
+</robot>
