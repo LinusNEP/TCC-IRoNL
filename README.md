@@ -248,7 +248,7 @@ The robot is now ready to receive commands!
 |----------|---------|
 | **T1** | `roslaunch romr_ros romr_navigation.launch` |
 | **T3** | `roslaunch tcc_ros tcc_ros.launch` |
-| **T4** | `roslaunch tcc_ros chatGUI_SR.launch` |
+| **T4** | `roslaunch tcc_ros chatGUI.launch` |
 
 No state-switching needed for wheeled robots.
 
