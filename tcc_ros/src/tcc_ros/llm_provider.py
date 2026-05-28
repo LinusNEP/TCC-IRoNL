@@ -2,7 +2,7 @@
 
 import os
 import requests
-import openai
+from openai import OpenAI
 import importlib
 import rospy
 
@@ -14,23 +14,23 @@ class BaseLLMProvider:
 # -------------------------
 class OpenAIProvider(BaseLLMProvider):
     def __init__(self, api_key, model_name, max_tokens, temperature):
-        openai.api_key = api_key
+        self.client = OpenAI(api_key=api_key)
         self.model_name = model_name
         self.max_tokens = max_tokens
         self.temperature = temperature
 
     def chat(self, system_message, user_prompt):
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[
                     {"role": "system", "content": system_message},
-                    {"role": "user", "content": user_prompt}
+                    {"role": "user", "content": user_prompt},
                 ],
                 max_tokens=self.max_tokens,
-                temperature=self.temperature
+                temperature=self.temperature,
             )
-            return response["choices"][0]["message"]["content"].strip()
+            return response.choices[0].message.content.strip()
         except Exception as e:
             rospy.logerr(f"OpenAI API error: {e}")
             return "I'm sorry, I couldn't process that request."
