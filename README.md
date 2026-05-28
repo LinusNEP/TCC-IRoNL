@@ -147,6 +147,7 @@ sudo apt install -y \
     ros-noetic-map-server \
     ros-noetic-gmapping \
     ros-noetic-teb-local-planner
+sudo apt install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-plugins
 ```
 
 #### 2. Create Workspace & Clone
@@ -233,7 +234,7 @@ source ~/catkin_ws/TCC-IRoNLEnv/bin/activate
 | **T1** | `roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false` | Gazebo world |
 | **T2** | `roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true` | Navigation stack |
 | **T3** | `roslaunch tcc_ros tcc_ros.launch` | LLM/VLM backend |
-| **T4** | `roslaunch tcc_ros chatGUI_SR.launch` | Chat interface |
+| **T4** | `roslaunch tcc_ros chatGUI.launch` | Chat interface |
 
 **Robot State Setup** (in T1):
 - Press `2` → Switch from **Passive** to **FixedStand**
