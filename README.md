@@ -178,7 +178,7 @@ cd ~/catkin_ws/src/TCC-IRoNL/tcc_ros/src/tcc_ros/models
 wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
 ```
 
-> ⚠️ **Required**: Without this file, `roslaunch tcc_ros tcc_ros.launch` will fail.
+> ⚠️ **Required**: Without this file, `roslaunch tcc_ros tcc_ros.launch` will return error.
 
 #### 5. Configure API Keys
 
