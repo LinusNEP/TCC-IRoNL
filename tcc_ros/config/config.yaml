@@ -1,7 +1,6 @@
 # This script is based on the paper, "The Conversation is the Command: Interacting with Real-World Autonomous Robots Through Natural Language": https://dl.acm.org/doi/abs/10.1145/3610978.3640723
 # Its usage is subject to the  Creative Commons Attribution International 4.0 License.
 
-# config.yaml
 models:
   # === LLM (Language Model) Configuration ===
   llm_provider: "openai"  # Options: openai, deepseek, llama.cpp, claude, gemini
