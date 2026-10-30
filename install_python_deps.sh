@@ -1,12 +1,8 @@
 #!/bin/bash
-# TCC-IRoNL Python Dependencies Installer
-# Creates a virtual environment with all required packages.
-
 set -e
 
 # Find the workspace root.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Workspace root is two directories up: <ws>/src/TCC-IRoNL/ -> <ws>
 WORKSPACE_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 VENV_DIR="$WORKSPACE_DIR/TCC-IRoNLEnv"
 
@@ -16,8 +12,6 @@ echo "=========================================="
 echo "Workspace: $WORKSPACE_DIR"
 echo "Virtualenv: $VENV_DIR"
 echo ""
-
-# Fall back to python3 if 3.8 isn't on PATH.
 if command -v python3.8 >/dev/null 2>&1; then
     PYTHON_BIN="python3.8"
 else
@@ -34,7 +28,6 @@ fi
 
 echo "Python: $PYTHON_VERSION ($PYTHON_BIN)"
 
-# Virtual environment
 if [ -d "$VENV_DIR" ]; then
     echo "Virtual environment already exists at $VENV_DIR"
     if [ -t 0 ]; then
@@ -54,8 +47,6 @@ else
     echo "Virtual environment created"
 fi
 
-# Activate and upgrade pip
-# shellcheck disable=SC1090
 source "$VENV_DIR/bin/activate"
 pip install --upgrade pip setuptools wheel
 
