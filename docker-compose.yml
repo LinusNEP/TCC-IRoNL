@@ -1,5 +1,4 @@
 services:
-  # ROS Core (shared ROS master)
   roscore:
     build:
       context: .
@@ -12,8 +11,7 @@ services:
         source /opt/ros/noetic/setup.bash &&
         roscore
       "
-
-  # Gazebo Simulation World
+      
   gazebo:
     build:
       context: .
@@ -39,7 +37,6 @@ services:
     depends_on:
       - roscore
 
-  # ROS Navigation Stack
   navigation:
     build:
       context: .
@@ -65,7 +62,6 @@ services:
     depends_on:
       - gazebo
 
-  # LLM / VLM Backend Node
   llm-backend:
     build:
       context: .
@@ -95,7 +91,6 @@ services:
     depends_on:
       - navigation
 
-  # Chat GUI Web Interface
   chat-gui:
     build:
       context: .
