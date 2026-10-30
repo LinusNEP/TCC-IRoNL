@@ -32,7 +32,7 @@ services:
       bash -c "
         source /opt/ros/noetic/setup.bash &&
         source /root/catkin_ws/devel/setup.bash &&
-        roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=true
+        roslaunch unitree_gazebo sim_bringup.launch rname:=go1 wname:=cps_world rviz:=false
       "
     depends_on:
       - roscore
@@ -57,7 +57,7 @@ services:
         source /opt/ros/noetic/setup.bash &&
         source /root/catkin_ws/devel/setup.bash &&
         sleep 10 &&
-        roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=false
+        roslaunch unitree_navigation navigation.launch rname:=go1 rviz:=true
       "
     depends_on:
       - gazebo
